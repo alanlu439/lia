@@ -1,0 +1,15 @@
+[build]
+  publish = "public"
+
+[[redirects]]
+  from = "/*"
+  to = "https://logos-international-academy.alanlu439.chatgpt.site/:splat"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-store, max-age=0"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
