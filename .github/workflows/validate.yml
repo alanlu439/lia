@@ -1,0 +1,31 @@
+name: Validate LIA website bridge
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify required files
+        run: |
+          test -f netlify.toml
+          test -f public/index.html
+
+      - name: Verify Netlify publish directory
+        run: grep -F 'publish = "public"' netlify.toml
+
+      - name: Verify ChatGPT Site proxy target
+        run: grep -F 'https://logos-international-academy.alanlu439.chatgpt.site/:splat' netlify.toml
+
+      - name: Verify production page title
+        run: grep -F '<title>Logos International Academy</title>' public/index.html
