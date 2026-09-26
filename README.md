@@ -1,25 +1,66 @@
 # LIA Website
 
-Production bridge for the Logos International Academy website.
+Production repository for the Logos International Academy website at **https://lia.ac.th**.
 
-## Source
+## Architecture
 
 The current public website is maintained in ChatGPT Sites:
 
-- https://logos-international-academy.alanlu439.chatgpt.site
+- Source site: `https://logos-international-academy.alanlu439.chatgpt.site`
+- Production domain: `https://lia.ac.th`
+- Hosting: Netlify
+- Repository: `alanlu439/lia`
 
-## Netlify
+Netlify uses the catch-all proxy in `netlify.toml` to serve the current ChatGPT Site through the production domain. This keeps the published design synchronized with the ChatGPT Site without manually copying generated site files.
 
-This repository is configured for Netlify using `netlify.toml`.
+## Netlify configuration
 
-The Netlify site proxies all routes to the current ChatGPT Site so edits published there are reflected automatically through Netlify without copying site files manually.
-
-### Netlify settings
-
+- Production branch: `main`
 - Build command: none
 - Publish directory: `public`
-- Production branch: `main`
+- Forms: enabled in Netlify
+- Custom domain: `lia.ac.th`
 
-## Future migration
+Do not remove or change the catch-all proxy in `netlify.toml` unless the site is being migrated to native source code in this repository.
 
-When the site source becomes exportable or is rebuilt directly in this repository, remove the catch-all proxy redirect from `netlify.toml` and deploy the native site from GitHub instead.
+## Repository structure
+
+```text
+.
+├── .github/workflows/validate.yml   # CI checks for the deployment contract
+├── .editorconfig                    # Consistent text formatting
+├── .gitignore                       # Local/tooling exclusions
+├── netlify.toml                     # Netlify publish, proxy, and headers config
+├── public/index.html                # Fallback/static publish entry
+└── README.md
+```
+
+## Validation
+
+GitHub Actions runs on pushes and pull requests targeting `main`. It checks that:
+
+- `netlify.toml` exists
+- `public/index.html` exists
+- Netlify still publishes `public`
+- The ChatGPT Site proxy target is unchanged
+- The fallback page keeps the expected school title
+
+## Editing workflow
+
+1. Make visual/content changes in the ChatGPT Site.
+2. Publish the ChatGPT Site changes.
+3. `lia.ac.th` should serve the updated result through the Netlify proxy.
+4. Only edit this repository when changing hosting, deployment, proxy, headers, or repository configuration.
+
+## Future native migration
+
+If the website is later rebuilt as native HTML/CSS/JavaScript or another framework in this repository:
+
+1. Add the full website source here.
+2. Update the Netlify build and publish settings.
+3. Remove the catch-all proxy redirect from `netlify.toml`.
+4. Validate the native deployment before switching production traffic.
+
+## Access and safety
+
+This repository is private. Do not commit passwords, API tokens, Netlify credentials, or other secrets. Use provider-managed environment variables for any future secret configuration.
