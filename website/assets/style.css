@@ -84,3 +84,65 @@ html{scroll-padding-top:125px}.skip{z-index:30}
  .form-status:not([hidden]){animation:answer-entrance .28s var(--motion-ease) both}
  .hero-copy>*,.page-intro>*,.reveal-in{animation-timing-function:var(--motion-ease)}
 }
+
+/* Three consistent action styles: solid, outline, and underlined text. */
+:root{--blue-wash:#edf2f7;--warm-wash:#f5f2ed;--button-hover:#032048}
+.button,.header nav .nav-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-height:50px;padding:13px 23px;border:1px solid var(--navy);border-radius:0;background:var(--navy);color:#fff;font-size:.95rem;line-height:1.5;box-shadow:none;transition:background .2s ease,color .2s ease,border-color .2s ease}
+.button:hover,.header nav .nav-cta:hover{background:var(--button-hover);border-color:var(--button-hover);color:#fff;transform:none;box-shadow:none}
+.button.secondary{background:transparent;border-color:var(--navy);color:var(--navy)}
+.button.secondary:hover{background:var(--navy);border-color:var(--navy);color:#fff}
+.button span{font-size:1.1rem}
+.text-link{color:var(--navy);border-bottom:1px solid currentColor;gap:20px;padding-bottom:5px;font-size:.95rem;line-height:1.5;min-height:34px}
+.text-link:hover{color:var(--button-hover);border-color:currentColor}
+.story-row{grid-template-columns:80px minmax(0,1fr) auto}
+.story-link{margin:0;align-self:center;white-space:nowrap}
+
+/* Full-width color fields keep the original content grid aligned. */
+.section-band{width:100%;max-width:none;margin-inline:0;padding-inline:max(6%,calc((100% - 1240px)/2))}
+.section-band-blue,.process-section,.philosophy{background:var(--blue-wash)}
+.section-band-warm{background:var(--warm-wash)}
+.page-intro.section-band{padding-top:26px;padding-bottom:76px;margin-bottom:64px}
+.highlights.section-band{padding-block:76px 65px}
+.faq.section-band{padding-block:65px 75px}
+.mission-vision.section-band{margin-top:70px}
+.mission-banner{padding-block:96px;background:var(--navy);color:#fff;text-align:center}
+.mission-banner .eyebrow{color:#c5d5ea}
+.mission-banner h2{max-width:980px;margin:28px auto 24px;font-size:clamp(2.5rem,4.2vw,4.2rem);line-height:1.2}
+.mission-banner em{color:#c5d5ea}
+.mission-banner p{color:#dce5f1;max-width:36rem;margin-inline:auto}
+.mission-banner .text-link{color:#fff;margin-top:30px}
+.mission-banner .text-link:focus-visible{outline-color:white}
+.contact-panel{background:var(--blue-wash);border-top:3px solid var(--navy)}
+.cta{border-top:0}
+@media(max-width:800px){
+ .page-intro.section-band{padding-bottom:50px;margin-bottom:45px}
+ .mission-banner{padding-block:65px}
+ .mission-banner h2{margin-block:24px;font-size:clamp(2.2rem,7vw,3.3rem)}
+ .highlights.section-band,.faq.section-band{padding-block:55px}
+ .mission-vision.section-band{margin-top:50px}
+ .story-row{grid-template-columns:36px minmax(0,1fr);gap:14px 20px}
+ .story-link{grid-column:2;justify-self:start;margin-top:7px}
+}
+@media(max-width:420px){
+ .story-row{grid-template-columns:minmax(0,1fr)}
+ .story-link{grid-column:1}
+ .button,.header nav .nav-cta{gap:18px;padding-inline:20px}
+}
+
+/* Native page transitions retain normal links, history, and form behavior. */
+@view-transition{navigation:auto}
+@media(prefers-reduced-motion:no-preference){
+ .header{view-transition-name:school-header}
+ @keyframes page-fade-out{to{opacity:0}}
+ @keyframes page-fade-in{from{opacity:0}to{opacity:1}}
+ ::view-transition-old(root){animation:page-fade-out .18s ease-out both}
+ ::view-transition-new(root){animation:page-fade-in .3s ease-in-out both}
+ ::view-transition-group(school-header){animation-duration:.3s}
+ ::view-transition-old(school-header){animation:none;opacity:0}
+ ::view-transition-new(school-header){animation:none}
+ @supports not (view-transition-name:school-header){main{animation:page-fade-in .3s ease-out both}}
+}
+@media(prefers-reduced-motion:reduce){
+ @view-transition{navigation:none}
+ ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
+}
