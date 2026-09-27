@@ -23,6 +23,16 @@ Netlify uses the catch-all proxy in `netlify.toml` to serve the current ChatGPT 
 
 Do not remove or change the catch-all proxy in `netlify.toml` unless the site is being migrated to native source code in this repository.
 
+## Website source updates
+
+Always save website source updates to this GitHub repository. The `website/` folder contains the latest five-page static design, including the centered header logo, Georgia typography, and subtle animations.
+
+The owner has explicitly chosen to **keep the current ChatGPT Sites forwarding**. The `website/` folder is a source snapshot and is not the Netlify publish directory. Pushing source changes here does not update the forwarded live design; that still requires a successful ChatGPT Sites publication. Do not remove or replace the catch-all proxy without explicit approval.
+
+Preview the snapshot with `python3 -m http.server 4173 --directory website`.
+
+The snapshot intentionally uses Lorem ipsum and marked school-information/photo placeholders. Its inquiry form is preview-only and does not send or store submissions.
+
 ## Repository structure
 
 ```text
@@ -32,6 +42,7 @@ Do not remove or change the catch-all proxy in `netlify.toml` unless the site is
 ├── .gitignore                       # Local/tooling exclusions
 ├── netlify.toml                     # Netlify publish, proxy, and headers config
 ├── public/index.html                # Fallback/static publish entry
+├── website/                        # Latest static website source snapshot
 └── README.md
 ```
 
@@ -50,7 +61,7 @@ GitHub Actions runs on pushes and pull requests targeting `main`. It checks that
 1. Make visual/content changes in the ChatGPT Site.
 2. Publish the ChatGPT Site changes.
 3. `lia.ac.th` should serve the updated result through the Netlify proxy.
-4. Only edit this repository when changing hosting, deployment, proxy, headers, or repository configuration.
+4. Commit and push every website source update to `website/` in this repository. Keep hosting configuration unchanged unless specifically requested.
 
 ## Future native migration
 
