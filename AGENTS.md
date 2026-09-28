@@ -6,3 +6,5 @@
 - Do not restore the old Sites proxy. Preserve existing domain and access settings.
 - Verify the production deployment matches the pushed commit before reporting publication complete.
 - Double-check important information and do not invent school facts or contact details.
+
+- When the user says publish, update BOTH Netlify and the existing ChatGPT Site from the same website/ files. Push GitHub first, sync website/ into ../lia-site/dist/, and use the Sites hosting workflow for project appgprj_6ab677f8ed1c8191863552a9dc4a24c4. Preserve the Sites public audience. Verify both deployments before claiming full completion.

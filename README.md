@@ -8,8 +8,12 @@ The website source of truth is the private `alanlu439/lia` GitHub repository. Ne
 2. Run `python3 scripts/validate.py` and `node --check website/assets/site.js`.
 3. Commit and push to `main`.
 4. Confirm the connected Netlify project, `logos-international-academy`, successfully publishes the matching commit.
+5. Sync the same `website/` files into `../lia-site/dist/` and publish the existing ChatGPT Site using the Sites hosting workflow, preserving public access.
+6. Verify both deployments. A request to publish always means both hosts, with GitHub updated.
 
-Production: https://logos-international-academy.netlify.app
+Netlify: https://logos-international-academy.netlify.app
+
+ChatGPT Site: https://logos-international-academy.alanlu439.chatgpt.site
 
 Netlify uses `netlify.toml`, publishes `website/`, and needs no build command. The old ChatGPT Sites proxy has been removed with the owner's approval. Domain and access settings remain managed in Netlify. The old `public/` fallback is retained but is not published.
 
