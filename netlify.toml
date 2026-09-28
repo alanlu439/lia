@@ -1,11 +1,5 @@
 [build]
-  publish = "public"
-
-[[redirects]]
-  from = "/*"
-  to = "https://logos-international-academy.alanlu439.chatgpt.site/:splat"
-  status = 200
-  force = true
+  publish = "website"
 
 [[headers]]
   for = "/*"

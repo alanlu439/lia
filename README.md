@@ -1,77 +1,26 @@
-# LIA Website
+# Logos International Academy website
 
-Production repository for the Logos International Academy website at **https://lia.ac.th**.
+The website source of truth is the private `alanlu439/lia` GitHub repository. Netlify serves the five-page static website directly from `website/`.
 
-## Architecture
+## Publishing
 
-The current public website is maintained in ChatGPT Sites:
+1. Edit files in `website/`.
+2. Run `python3 scripts/validate.py` and `node --check website/assets/site.js`.
+3. Commit and push to `main`.
+4. Confirm the connected Netlify project, `logos-international-academy`, successfully publishes the matching commit.
 
-- Source site: `https://logos-international-academy.alanlu439.chatgpt.site`
-- Production domain: `https://lia.ac.th`
-- Hosting: Netlify
-- Repository: `alanlu439/lia`
+Production: https://logos-international-academy.netlify.app
 
-Netlify uses the catch-all proxy in `netlify.toml` to serve the current ChatGPT Site through the production domain. This keeps the published design synchronized with the ChatGPT Site without manually copying generated site files.
+Netlify uses `netlify.toml`, publishes `website/`, and needs no build command. The old ChatGPT Sites proxy has been removed with the owner's approval. Domain and access settings remain managed in Netlify. The old `public/` fallback is retained but is not published.
 
-## Netlify configuration
+## Local preview
 
-- Production branch: `main`
-- Build command: none
-- Publish directory: `public`
-- Forms: enabled in Netlify
-- Custom domain: `lia.ac.th`
+Run `python3 -m http.server 4174 --directory website` and open http://localhost:4174/.
 
-Do not remove or change the catch-all proxy in `netlify.toml` unless the site is being migrated to native source code in this repository.
+## Design and content
 
-## Website source updates
+Georgia headings and Arial body text; navy, warm white, and a muted blue accent. The header uses the navy logo, and all footers use the supplied transparent white logo. Image frames use a 3:2 ratio. Motion respects reduced-motion preferences.
 
-Always save website source updates to this GitHub repository. The `website/` folder contains the latest five-page static design, including the centered header logo, Georgia typography, and subtle animations.
+Editorial body text is intentionally Lorem ipsum. Official contact details and photography remain marked placeholders. The inquiry form is preview-only and does not send or store submissions. Connect an approved admissions destination before treating it as a working inquiry form.
 
-The owner has explicitly chosen to **keep the current ChatGPT Sites forwarding**. The `website/` folder is a source snapshot and is not the Netlify publish directory. Pushing source changes here does not update the forwarded live design; that still requires a successful ChatGPT Sites publication. Do not remove or replace the catch-all proxy without explicit approval.
-
-Preview the snapshot with `python3 -m http.server 4173 --directory website`.
-
-The snapshot intentionally uses Lorem ipsum and marked school-information/photo placeholders. Its inquiry form is preview-only and does not send or store submissions.
-
-## Repository structure
-
-```text
-.
-├── .github/workflows/validate.yml   # CI checks for the deployment contract
-├── .editorconfig                    # Consistent text formatting
-├── .gitignore                       # Local/tooling exclusions
-├── netlify.toml                     # Netlify publish, proxy, and headers config
-├── public/index.html                # Fallback/static publish entry
-├── website/                        # Latest static website source snapshot
-└── README.md
-```
-
-## Validation
-
-GitHub Actions runs on pushes and pull requests targeting `main`. It checks that:
-
-- `netlify.toml` exists
-- `public/index.html` exists
-- Netlify still publishes `public`
-- The ChatGPT Site proxy target is unchanged
-- The fallback page keeps the expected school title
-
-## Editing workflow
-
-1. Make visual/content changes in the ChatGPT Site.
-2. Publish the ChatGPT Site changes.
-3. `lia.ac.th` should serve the updated result through the Netlify proxy.
-4. Commit and push every website source update to `website/` in this repository. Keep hosting configuration unchanged unless specifically requested.
-
-## Future native migration
-
-If the website is later rebuilt as native HTML/CSS/JavaScript or another framework in this repository:
-
-1. Add the full website source here.
-2. Update the Netlify build and publish settings.
-3. Remove the catch-all proxy redirect from `netlify.toml`.
-4. Validate the native deployment before switching production traffic.
-
-## Access and safety
-
-This repository is private. Do not commit passwords, API tokens, Netlify credentials, or other secrets. Use provider-managed environment variables for any future secret configuration.
+Never commit secrets or credentials. Keep the repository private.
