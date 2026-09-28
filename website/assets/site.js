@@ -32,16 +32,37 @@ if (!motionPreference.matches && 'IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('reveal-in');
-        observer.unobserve(entry.target);
+        reveal(entry.target);
       }
     });
-  }, {threshold:0.08});
+  }, {threshold:0.01, rootMargin:'0px 0px -24px 0px'});
+  const reveal = element => {
+    element.classList.add('reveal-in');
+    observer.unobserve(element);
+  };
+  const revealAll = () => {
+    document.querySelectorAll('.reveal-ready').forEach(reveal);
+    observer.disconnect();
+  };
   document.querySelectorAll('.intro > div, .feature-copy, .value, .story-row, .process-head, .steps li, .mission-vision article, .serve-story > div, .cta-line, .photo, .about-panel, .contact-panel').forEach(element => {
-    if (element.getBoundingClientRect().top >= window.innerHeight) observer.observe(element);
+    if (element.getBoundingClientRect().top >= window.innerHeight) {
+      element.classList.add('reveal-ready');
+      observer.observe(element);
+    }
   });
   motionPreference.addEventListener('change', event => {
-    if (event.matches) observer.disconnect();
+    if (event.matches) revealAll();
+  });
+  document.addEventListener('focusin', event => {
+    const section = event.target.closest('.reveal-ready');
+    if (section) reveal(section);
+  });
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) revealAll();
   });
 }
+window.addEventListener('pageshow', () => {
+  if (toggle && nav) setMenu(false);
+  updateHeader();
+});
 const form=document.querySelector('#inquiry-form');if(form){const phone=form.querySelector('#phone');const method=form.querySelector('#contact-method');const syncPhone=()=>{phone.required=method.value==='phone';phone.setAttribute('aria-required',String(phone.required))};method.addEventListener('change',syncPhone);syncPhone();form.addEventListener('submit',event=>{event.preventDefault();if(!form.reportValidity())return;const status=document.querySelector('#form-status');status.textContent='Preview complete. Your inquiry has not been sent or saved. School to provide the official admissions delivery details before this form can accept inquiries.';status.hidden=false;status.focus()})}
