@@ -256,3 +256,13 @@ html{scrollbar-gutter:stable}.home-hero{scroll-margin-top:104px}.hero-copy{paddi
 .opening-logo{opacity:calc(1 - var(--logo-handoff,0))}
 @media(prefers-reduced-motion:reduce){.page-home .header .brand,.opening-logo{opacity:1}}
 @media print{.page-home .header .brand{opacity:1}}
+
+/* A warmer invitation, using the existing Georgia display face. */
+.opening-title p{font-style:italic;font-weight:400;letter-spacing:-.045em;font-size:clamp(2.9rem,6.5vw,6rem);line-height:1.15}
+.opening-title>span{font-family:Georgia,serif;font-style:italic;font-size:clamp(1rem,1.4vw,1.25rem);letter-spacing:.015em;color:#d7e0ec;margin-top:20px}
+.opening-enter{display:inline-flex;align-items:center;gap:28px;padding:13px 24px;border:1px solid #ffffff55;border-radius:999px;background:#ffffff08;font:400 1.1rem/1.4 Georgia,serif;letter-spacing:.015em;white-space:nowrap;transition:background .35s ease,border-color .35s ease}
+.opening-enter span{display:grid;place-items:center;margin:0;width:27px;height:27px;border:1px solid #ffffff40;border-radius:50%;font:400 1rem Arial,sans-serif;transition:transform .35s ease}
+.opening-enter:hover{background:#ffffff15;border-color:#ffffffaa}.opening-enter:hover span{transform:translateY(2px)}.opening-enter:focus-visible{outline-color:var(--paper)}
+.hero-copy{padding-bottom:60px}
+@media(max-width:520px){.opening-title p{font-size:2.75rem}.opening-enter{font-size:1rem;padding:12px 21px}.hero-copy{padding-bottom:45px}}
+@media(prefers-reduced-motion:reduce){.opening-enter:hover span{transform:none}}
