@@ -297,16 +297,16 @@ html{scrollbar-gutter:stable}.home-hero{scroll-margin-top:104px}.hero-copy{paddi
 @media(max-width:520px){.campus-pair,.life-gallery-grid{grid-template-columns:1fr}.campus-pair .photo-portrait{max-width:100%}.life-gallery{padding-bottom:60px}}
 
 /* Photography belongs to the existing narrative, rather than separate galleries. */
-.page-home .mission-banner{background:linear-gradient(#052c60c9,#052c60d9),url('/assets/photos/community.webp') center 52%/cover no-repeat}
-.page-admission .page-intro{background:linear-gradient(90deg,#052c60ed,#052c6090),url('/assets/photos/student-life.webp') center 42%/cover no-repeat;color:var(--paper)}
-.page-serve .page-intro{background:linear-gradient(90deg,#052c60ed,#052c6099),url('/assets/photos/activities.webp') center 45%/cover no-repeat}
+
+.page-admission .page-intro{background:linear-gradient(90deg,#052c60ed,#052c6090),url('/assets/photos/tree-driveway.webp') center 42%/cover no-repeat;color:var(--paper)}
+.page-serve .page-intro{background:linear-gradient(90deg,#052c60ed,#052c6099),url('/assets/photos/school-gate.webp') center 45%/cover no-repeat}
 .page-admission .page-intro p,.page-admission .page-intro .breadcrumb,.page-admission .page-intro em{color:#f1eee7}
 .page-admission .page-intro a:focus-visible{outline-color:white}
 .page-about .about-overview .school-photo{align-self:center}
 @media(max-width:800px){
- .page-admission .page-intro{background-image:linear-gradient(#052c60ca,#052c60e6),url('/assets/photos/student-life-small.webp')}
- .page-serve .page-intro{background-image:linear-gradient(#052c60cc,#052c60e8),url('/assets/photos/activities-small.webp')}
- .page-home .mission-banner{background-image:linear-gradient(#052c60cd,#052c60e0),url('/assets/photos/community-small.webp')}
+ .page-admission .page-intro{background-image:linear-gradient(#052c60ca,#052c60e6),url('/assets/photos/tree-driveway-small.webp')}
+ .page-serve .page-intro{background-image:linear-gradient(#052c60cc,#052c60e8),url('/assets/photos/school-gate-small.webp')}
+
 }
 
 /* Page introductions carry the photography; the opening seal stays pure navy. */
@@ -351,3 +351,9 @@ html{scrollbar-gutter:stable}.home-hero{scroll-margin-top:104px}.hero-copy{paddi
 .page-serve .service-statement{background:linear-gradient(#052c6099,#052c60c9),url('/assets/photos/evening-sky.webp') center 38%/cover no-repeat;color:var(--paper)}
 .page-serve .service-statement em{color:var(--paper)}
 @media(max-width:800px){.photo-intro{grid-template-columns:1fr}.aligned-photo,.page-about .about-overview>.school-photo{min-height:0}.aligned-photo img,.page-about .about-overview>.school-photo img{position:static;height:auto;aspect-ratio:4/3}.coach-photo img{aspect-ratio:4/5;object-position:center 35%}.page-serve .service-statement{background-image:linear-gradient(#052c6099,#052c60c9),url('/assets/photos/evening-sky-small.webp')}}
+
+/* Height is animated in JavaScript so closing is as gentle as opening. */
+.program-panel .program-choice p{animation:none}
+.program-choice.is-expanding{overflow:hidden}
+.program-choice[data-expanded="false"] summary i{transform:rotate(0)}
+.program-choice[data-expanded="true"] summary i{transform:rotate(45deg)}

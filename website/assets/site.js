@@ -170,3 +170,37 @@ if (form) {
     }
   });
 }
+
+// Preserve native details semantics while animating each row in both directions.
+document.querySelectorAll('.program-choice').forEach(details => {
+  const summary = details.querySelector('summary');
+  let animation;
+  let expanded = details.open;
+  summary.addEventListener('click', event => {
+    if (motionPreference.matches || !details.animate) return;
+    event.preventDefault();
+    const start = details.getBoundingClientRect().height;
+    animation?.cancel();
+    expanded = !expanded;
+    details.dataset.expanded = String(expanded);
+    details.style.height = '';
+    details.open = true;
+    const style = getComputedStyle(details);
+    const collapsed = summary.getBoundingClientRect().height +
+      parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) +
+      parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+    const end = expanded ? details.getBoundingClientRect().height : collapsed;
+    details.classList.add('is-expanding');
+    animation = details.animate([{height: `${start}px`}, {height: `${end}px`}], {
+      duration: 520, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'both'
+    });
+    animation.onfinish = () => {
+      details.open = expanded;
+      animation.cancel();
+      animation = null;
+      details.classList.remove('is-expanding');
+      delete details.dataset.expanded;
+    };
+  });
+  details.addEventListener('toggle', () => { if (!animation) expanded = details.open; });
+});
