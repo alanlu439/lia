@@ -266,3 +266,8 @@ html{scrollbar-gutter:stable}.home-hero{scroll-margin-top:104px}.hero-copy{paddi
 .hero-copy{padding-bottom:60px}
 @media(max-width:520px){.opening-title p{font-size:2.75rem}.opening-enter{font-size:1rem;padding:12px 21px}.hero-copy{padding-bottom:45px}}
 @media(prefers-reduced-motion:reduce){.opening-enter:hover span{transform:none}}
+
+/* Quiet, consistent corners for contained content panels. */
+:root{--panel-radius:12px}
+.program-panel,.about-panel,.contact-panel,.page-request-info form,.page-admission .admission-details,.page-about .mission-vision{border-radius:var(--panel-radius)}
+.page-about .mission-vision{overflow:hidden}
