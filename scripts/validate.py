@@ -8,7 +8,7 @@ expected = {"index.html", "admission/index.html", "request-info/index.html", "se
 assert {str(p.relative_to(site)) for p in site.rglob("*.html")} == expected
 config = (root / "netlify.toml").read_text()
 assert 'publish = "website"' in config
-assert "chatgpt.site" not in config
+assert "[[redirects]]" not in config, "Keep direct Netlify hosting; no forwarding proxy"
 
 class Links(HTMLParser):
     def handle_starttag(self, tag, attrs):

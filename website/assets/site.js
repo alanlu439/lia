@@ -65,27 +65,85 @@ window.addEventListener('pageshow', () => {
   if (toggle && nav) setMenu(false);
   updateHeader();
 });
+// Scroll-linked introduction without intercepting wheel or touch scrolling.
+const opening = document.querySelector('.opening');
+if (opening) {
+  let frame = 0;
+  const clamp = value => Math.min(1, Math.max(0, value));
+  const smooth = value => value * value * (3 - 2 * value);
+  const renderOpening = () => {
+    frame = 0;
+    const reduced = motionPreference.matches;
+    const progress = clamp(window.scrollY / (window.innerHeight * .82));
+    const eased = smooth(progress);
+    const target = header.querySelector('.official-logo').getBoundingClientRect();
+    const initialSize = Math.min(260, window.innerWidth * .46);
+    opening.style.setProperty('--seal-y', `${window.innerHeight * .38 + (target.top + target.height / 2 - window.innerHeight * .38) * eased}px`);
+    opening.style.setProperty('--seal-size', `${initialSize + (target.width - initialSize) * eased}px`);
+    opening.style.setProperty('--seal-dark', smooth(clamp((progress - .65) / .35)));
+    opening.style.setProperty('--navy-fade', 1 - smooth(clamp((progress - .08) / .84)));
+    opening.style.setProperty('--slogan-opacity', 1 - smooth(clamp(progress / .68)));
+    opening.style.setProperty('--slogan-scale', 1 + eased * .65);
+    opening.style.setProperty('--slogan-y', `${eased * 105}px`);
+    document.body.classList.toggle('opening-complete', reduced || progress >= .995);
+    header.inert = !reduced && progress < .995;
+    opening.inert = !reduced && progress >= .995;
+  };
+  const scheduleOpening = () => { if (!frame) frame = requestAnimationFrame(renderOpening); };
+  window.addEventListener('scroll', scheduleOpening, {passive:true});
+  window.addEventListener('resize', scheduleOpening);
+  window.addEventListener('pageshow', scheduleOpening);
+  motionPreference.addEventListener('change', scheduleOpening);
+  document.querySelector('.skip')?.addEventListener('click', () => {
+    document.querySelector('#welcome').scrollIntoView({behavior:'instant'});
+  });
+  renderOpening();
+}
 const form = document.querySelector('#inquiry-form');
 if (form) {
   const phone = form.querySelector('#phone');
   const method = form.querySelector('#contact-method');
+  const status = document.querySelector('#form-status');
+  const button = form.querySelector('button[type="submit"]');
   const syncPhone = () => {
     phone.required = method.value === 'phone';
     phone.setAttribute('aria-required', String(phone.required));
   };
   method.addEventListener('change', syncPhone);
   syncPhone();
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    const data = new FormData(form);
-    const fields = [['Parent / guardian', 'parent'], ['Student', 'student'], ['Age / grade', 'grade'], ['Email', 'email'], ['Phone', 'phone'], ['Preferred contact', 'contactMethod'], ['Questions', 'message']];
-    const body = fields.map(([label, key]) => `${label}: ${data.get(key) || 'Not provided'}`).join('\n\n');
-    const subject = 'LIA Language School information request';
-    window.location.href = `mailto:logos.chiangmai@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    const status = document.querySelector('#form-status');
-    status.textContent = 'Please review and send the inquiry in your email app. If no email app opens, email logos.chiangmai@gmail.com directly. Your inquiry has not been sent by this website.';
+  const feedback = (message, state) => {
+    status.textContent = message;
+    status.dataset.state = state;
     status.hidden = false;
     status.focus();
+  };
+  if (new URLSearchParams(location.search).has('sent')) feedback('Thank you. Your inquiry has been received by LIA.', 'success');
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (button.disabled || !form.reportValidity()) return;
+    const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+    if (isLocal) {
+      feedback('This is a local preview. Please use the published website to send your inquiry.', 'error');
+      return;
+    }
+    button.disabled = true;
+    button.textContent = 'Sending…';
+    status.hidden = true;
+    try {
+      const response = await fetch('https://logos-international-academy.netlify.app/request-info/', {
+        method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams(new FormData(form)).toString(),
+        signal:AbortSignal.timeout(20000)
+      });
+      if (!response.ok) throw new Error('Submission failed');
+      form.reset();
+      syncPhone();
+      feedback('Thank you. Your inquiry has been received by LIA. We’ll reply using your contact details.', 'success');
+    } catch (error) {
+      feedback('We couldn’t confirm your submission. Your entries are still here. Please try again, or contact logos.chiangmai@gmail.com or 089-329-0517.', 'error');
+    } finally {
+      button.disabled = false;
+      button.innerHTML = 'Request Information <span aria-hidden="true">↗</span>';
+    }
   });
 }

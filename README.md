@@ -25,6 +25,8 @@ Run `python3 -m http.server 4174 --directory website` and open http://localhost:
 
 Georgia headings and Arial body text; navy, warm white, and a muted blue accent. The header uses the navy logo, and all footers use the supplied transparent white logo. Image frames use a 3:2 ratio. Motion respects reduced-motion preferences.
 
-School content and contact details come from the September 30, 2026 school information supplied by the owner. Use LIA Language School in website copy. Retain the original supplied seals and centered header at the owner’s request. No school photographs have been supplied; typographic program panels replace empty photography frames. The inquiry form prepares an email to logos.chiangmai@gmail.com in the visitor’s email app; the visitor must send it. The website does not send or store submissions. Tuition, documents, application dates, and detailed requirements remain unconfirmed.
+School content and contact details come from the September 30, 2026 school information supplied by the owner. Use LIA Language School in website copy. Retain the original supplied seals and centered header at the owner’s request. No school photographs have been supplied; typographic program panels replace empty photography frames. The inquiry form submits to Netlify Forms without opening an email app. Netlify stores submissions and sends notifications to logos.chiangmai@gmail.com. Keep the form notification configured in the Netlify dashboard. The same public endpoint is used by the ChatGPT Site, with its origin allowed by the request-info response header. Tuition, documents, application dates, and detailed requirements remain unconfirmed.
 
 Never commit secrets or credentials. Keep the repository private.
+
+The homepage uses a scroll-linked navy opening with the original seal and Soli Deo Gloria. Reduced-motion and no-JavaScript visitors get a static opening. Each page has its own layout treatments; retain the shared header and navigation.
