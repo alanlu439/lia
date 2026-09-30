@@ -248,3 +248,11 @@ html{scrollbar-gutter:stable}.home-hero{scroll-margin-top:104px}.hero-copy{paddi
 @media print{.opening,.opening-space{display:none}.page-home .header{position:relative;opacity:1!important}.header{position:relative}}
 
 #welcome{scroll-margin-top:0}
+
+/* Let the masthead emerge during the final stretch of the opening. */
+.page-home .header,.page-home:not(.opening-complete) .header{opacity:var(--header-reveal,0);transition:opacity .55s var(--motion-ease),box-shadow .65s ease}
+.page-home:not(.opening-complete) .header{box-shadow:none}
+.page-home .header .brand{opacity:var(--logo-handoff,0);transition:opacity .2s ease}
+.opening-logo{opacity:calc(1 - var(--logo-handoff,0))}
+@media(prefers-reduced-motion:reduce){.page-home .header .brand,.opening-logo{opacity:1}}
+@media print{.page-home .header .brand{opacity:1}}

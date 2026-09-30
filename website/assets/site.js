@@ -85,6 +85,11 @@ if (opening) {
     opening.style.setProperty('--slogan-opacity', 1 - smooth(clamp(progress / .68)));
     opening.style.setProperty('--slogan-scale', 1 + eased * .65);
     opening.style.setProperty('--slogan-y', `${eased * 105}px`);
+    const headerReveal = reduced ? 1 : smooth(clamp((progress - .76) / .235));
+    const logoHandoff = reduced ? 1 : smooth(clamp((progress - .94) / .055));
+    header.style.setProperty('--header-reveal', headerReveal);
+    header.style.setProperty('--logo-handoff', logoHandoff);
+    opening.style.setProperty('--logo-handoff', logoHandoff);
     document.body.classList.toggle('opening-complete', reduced || progress >= .995);
     header.inert = !reduced && progress < .995;
     opening.inert = !reduced && progress >= .995;
