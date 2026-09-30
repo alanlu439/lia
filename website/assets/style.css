@@ -325,3 +325,29 @@ html{scrollbar-gutter:stable}.home-hero{scroll-margin-top:104px}.hero-copy{paddi
  .page-about .page-intro{background-image:linear-gradient(#052c60b8,#052c60e0),url('/assets/photos/campus-small.webp')}
  .page-request-info .page-intro{background-image:linear-gradient(#052c60c9,#052c60e6),url('/assets/photos/entrance-small.webp')}
 }
+
+/* Balanced spacing and aligned photography on the home page. */
+.page-home .home-hero{width:min(1360px,88%);margin-inline:auto;gap:32px;padding-block:32px;align-items:stretch}
+.page-home .home-hero .hero-copy,.page-home .home-hero .program-panel{margin:0;padding:48px 9%}
+.page-home .home-intro{grid-template-columns:1fr 1.35fr;gap:clamp(32px,5vw,76px);align-items:stretch}
+.home-intro .eyebrow{margin-bottom:24px}
+.welcome-photo{position:relative;min-height:380px}
+.welcome-photo img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:40% center}
+.page-home .feature{align-items:stretch;gap:clamp(32px,5vw,76px)}
+.page-home .feature>.school-photo{position:relative;min-height:430px}
+.page-home .feature>.school-photo img{position:absolute;inset:0;height:100%;aspect-ratio:auto;object-fit:cover;object-position:50% center}
+@media(max-width:1000px){.page-home .home-hero{grid-template-columns:1fr;gap:28px}.page-home .home-hero .hero-copy,.page-home .home-hero .program-panel{padding:44px 7%}}
+@media(max-width:800px){.page-home .home-intro{grid-template-columns:1fr}.welcome-photo{min-height:0}.welcome-photo img{position:static;aspect-ratio:4/3;height:auto}.page-home .feature>.school-photo{min-height:0}.page-home .feature>.school-photo img{position:static;aspect-ratio:4/3;height:auto}.page-home .home-hero{padding-block:28px}}
+
+.admission-fit{grid-template-columns:1fr 1.35fr;align-items:stretch;gap:clamp(32px,5vw,76px)}
+.admission-fit>div>.eyebrow{margin-bottom:24px}.admission-photo{position:relative;min-height:380px}.admission-photo img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:center}
+@media(max-width:800px){.admission-fit{grid-template-columns:1fr}.admission-photo{min-height:0}.admission-photo img{position:static;aspect-ratio:4/3;height:auto}}
+
+.photo-intro{grid-template-columns:1fr 1.35fr;gap:clamp(32px,5vw,76px);align-items:stretch}.photo-intro>div>.eyebrow{margin-bottom:24px}
+.aligned-photo,.page-about .about-overview>.school-photo{position:relative;min-height:420px;align-self:stretch}
+.aligned-photo img,.page-about .about-overview>.school-photo img{position:absolute;inset:0;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center}
+.coach-photo img{object-position:45% center}.story-photo{margin-top:32px}.story-photo img{aspect-ratio:4/3;object-fit:cover}
+.page-about .about-overview{align-items:stretch}
+.page-serve .service-statement{background:linear-gradient(#052c6099,#052c60c9),url('/assets/photos/evening-sky.webp') center 38%/cover no-repeat;color:var(--paper)}
+.page-serve .service-statement em{color:var(--paper)}
+@media(max-width:800px){.photo-intro{grid-template-columns:1fr}.aligned-photo,.page-about .about-overview>.school-photo{min-height:0}.aligned-photo img,.page-about .about-overview>.school-photo img{position:static;height:auto;aspect-ratio:4/3}.coach-photo img{aspect-ratio:4/5;object-position:center 35%}.page-serve .service-statement{background-image:linear-gradient(#052c6099,#052c60c9),url('/assets/photos/evening-sky-small.webp')}}
