@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": "website",
+  "rewrites": [
+    {
+      "source": "/api/inquiry",
+      "destination": "https://logos-international-academy.netlify.app/request-info/"
+    }
+  ]
+}
