@@ -1,4 +1,4 @@
-# Logos International Academy website
+# LIA Language School website
 
 The website source of truth is the private `alanlu439/lia` GitHub repository. Netlify serves the five-page static website directly from `website/`.
 
@@ -25,6 +25,6 @@ Run `python3 -m http.server 4174 --directory website` and open http://localhost:
 
 Georgia headings and Arial body text; navy, warm white, and a muted blue accent. The header uses the navy logo, and all footers use the supplied transparent white logo. Image frames use a 3:2 ratio. Motion respects reduced-motion preferences.
 
-Editorial body text is intentionally Lorem ipsum. Official contact details and photography remain marked placeholders. The inquiry form is preview-only and does not send or store submissions. Connect an approved admissions destination before treating it as a working inquiry form.
+School content and contact details come from the September 30, 2026 school information supplied by the owner. Use LIA Language School in website copy. Retain the original supplied seals and centered header at the owner’s request. No school photographs have been supplied; typographic program panels replace empty photography frames. The inquiry form prepares an email to logos.chiangmai@gmail.com in the visitor’s email app; the visitor must send it. The website does not send or store submissions. Tuition, documents, application dates, and detailed requirements remain unconfirmed.
 
 Never commit secrets or credentials. Keep the repository private.

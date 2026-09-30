@@ -65,4 +65,27 @@ window.addEventListener('pageshow', () => {
   if (toggle && nav) setMenu(false);
   updateHeader();
 });
-const form=document.querySelector('#inquiry-form');if(form){const phone=form.querySelector('#phone');const method=form.querySelector('#contact-method');const syncPhone=()=>{phone.required=method.value==='phone';phone.setAttribute('aria-required',String(phone.required))};method.addEventListener('change',syncPhone);syncPhone();form.addEventListener('submit',event=>{event.preventDefault();if(!form.reportValidity())return;const status=document.querySelector('#form-status');status.textContent='Preview complete. Your inquiry has not been sent or saved. School to provide the official admissions delivery details before this form can accept inquiries.';status.hidden=false;status.focus()})}
+const form = document.querySelector('#inquiry-form');
+if (form) {
+  const phone = form.querySelector('#phone');
+  const method = form.querySelector('#contact-method');
+  const syncPhone = () => {
+    phone.required = method.value === 'phone';
+    phone.setAttribute('aria-required', String(phone.required));
+  };
+  method.addEventListener('change', syncPhone);
+  syncPhone();
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    const data = new FormData(form);
+    const fields = [['Parent / guardian', 'parent'], ['Student', 'student'], ['Age / grade', 'grade'], ['Email', 'email'], ['Phone', 'phone'], ['Preferred contact', 'contactMethod'], ['Questions', 'message']];
+    const body = fields.map(([label, key]) => `${label}: ${data.get(key) || 'Not provided'}`).join('\n\n');
+    const subject = 'LIA Language School information request';
+    window.location.href = `mailto:logos.chiangmai@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const status = document.querySelector('#form-status');
+    status.textContent = 'Please review and send the inquiry in your email app. If no email app opens, email logos.chiangmai@gmail.com directly. Your inquiry has not been sent by this website.';
+    status.hidden = false;
+    status.focus();
+  });
+}

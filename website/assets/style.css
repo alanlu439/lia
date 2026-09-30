@@ -207,3 +207,13 @@ input,select,textarea{border-color:var(--line);background:var(--paper)}
  .header nav,.header nav.open{gap:4px}
  .header nav a:not(.nav-cta){padding:12px 16px}
 }
+
+/* LIA Language School program panel. */
+.program-panel{align-self:stretch;background:var(--navy);color:var(--paper);padding:52px 12%;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.program-panel p{font:400 clamp(2rem,3.2vw,3.4rem)/1.2 Georgia,serif;color:var(--paper);padding:25px 0;border-bottom:1px solid #ffffff30}
+.program-panel p span{display:block;font:600 .65rem/1.5 Arial,sans-serif;letter-spacing:.14em;margin-bottom:12px;color:#c6cfd9}
+.three-values{grid-template-columns:repeat(3,1fr)}
+.footer-contact a{text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+footer a:focus-visible{outline-color:var(--paper)}
+@media(max-width:800px){.program-panel{padding:38px 6%;gap:24px}.program-panel p{font-size:2.4rem}.three-values{grid-template-columns:1fr;gap:32px}}
+.inline-link{text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.spaced-heading{margin:34px 0 18px}.serve-story h3+p{margin-top:18px}.admission-fit p+p{margin-top:18px}.footer-brand{align-self:start}.program-panel .eyebrow{color:#c6cfd9}
