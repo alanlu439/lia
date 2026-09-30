@@ -69,30 +69,43 @@ window.addEventListener('pageshow', () => {
 const opening = document.querySelector('.opening');
 if (opening) {
   let frame = 0;
+  let displayedProgress = null;
+  let previousTime = 0;
   const clamp = value => Math.min(1, Math.max(0, value));
   const smooth = value => value * value * (3 - 2 * value);
-  const renderOpening = () => {
+  const renderOpening = (time = performance.now()) => {
     frame = 0;
     const reduced = motionPreference.matches;
-    const progress = clamp(window.scrollY / (window.innerHeight * .82));
-    const eased = smooth(progress);
+    const openingHeight = document.querySelector('.opening-space').offsetHeight || window.innerHeight;
+    const destination = clamp(window.scrollY / (openingHeight * .82));
+    const elapsed = previousTime ? Math.min(time - previousTime, 64) : 16;
+    previousTime = time;
+    if (displayedProgress === null || reduced) displayedProgress = destination;
+    displayedProgress += (destination - displayedProgress) * (1 - Math.exp(-elapsed / 85));
+    if (Math.abs(destination - displayedProgress) < .0001) displayedProgress = destination;
+    const progress = displayedProgress;
+    // Finish the seal's movement before exchanging the two identical navy images.
+    const eased = smooth(clamp(progress / .88));
     const target = header.querySelector('.official-logo').getBoundingClientRect();
     const initialSize = Math.min(260, window.innerWidth * .46);
+    opening.style.setProperty('--seal-x', `${window.innerWidth / 2 + (target.left + target.width / 2 - window.innerWidth / 2) * eased}px`);
     opening.style.setProperty('--seal-y', `${window.innerHeight * .38 + (target.top + target.height / 2 - window.innerHeight * .38) * eased}px`);
     opening.style.setProperty('--seal-size', `${initialSize + (target.width - initialSize) * eased}px`);
-    opening.style.setProperty('--seal-dark', smooth(clamp((progress - .65) / .35)));
+    opening.style.setProperty('--seal-dark', smooth(clamp((progress - .48) / .36)));
     opening.style.setProperty('--navy-fade', 1 - smooth(clamp((progress - .08) / .84)));
     opening.style.setProperty('--slogan-opacity', 1 - smooth(clamp(progress / .68)));
-    opening.style.setProperty('--slogan-scale', 1 + eased * .65);
-    opening.style.setProperty('--slogan-y', `${eased * 105}px`);
-    const headerReveal = reduced ? 1 : smooth(clamp((progress - .76) / .235));
-    const logoHandoff = reduced ? 1 : smooth(clamp((progress - .94) / .055));
+    opening.style.setProperty('--slogan-scale', 1 + smooth(progress) * 1.35);
+    opening.style.setProperty('--slogan-y', `${smooth(progress) * 160}px`);
+    const headerReveal = reduced ? 1 : smooth(clamp((progress - .52) / .34));
+    const logoHandoff = reduced ? 1 : smooth(clamp((progress - .9) / .1));
     header.style.setProperty('--header-reveal', headerReveal);
     header.style.setProperty('--logo-handoff', logoHandoff);
     opening.style.setProperty('--logo-handoff', logoHandoff);
-    document.body.classList.toggle('opening-complete', reduced || progress >= .995);
-    header.inert = !reduced && progress < .995;
-    opening.inert = !reduced && progress >= .995;
+    document.body.style.setProperty('--welcome-reveal', reduced ? 1 : smooth(clamp((progress - .45) / .55)));
+    document.body.classList.toggle('opening-complete', reduced || progress === 1);
+    header.inert = !reduced && progress < .9;
+    opening.inert = !reduced && progress === 1;
+    if (displayedProgress !== destination) frame = requestAnimationFrame(renderOpening);
   };
   const scheduleOpening = () => { if (!frame) frame = requestAnimationFrame(renderOpening); };
   window.addEventListener('scroll', scheduleOpening, {passive:true});

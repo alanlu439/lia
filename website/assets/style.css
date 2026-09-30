@@ -271,3 +271,13 @@ html{scrollbar-gutter:stable}.home-hero{scroll-margin-top:104px}.hero-copy{paddi
 :root{--panel-radius:12px}
 .program-panel,.about-panel,.contact-panel,.page-request-info form,.page-admission .admission-details,.page-about .mission-vision{border-radius:var(--panel-radius)}
 .page-about .mission-vision{overflow:hidden}
+
+/* One scroll clock controls the seal, its handoff, and the arriving content. */
+.page-home .header,.page-home:not(.opening-complete) .header{transition:box-shadow .65s ease}
+.page-home .header .brand{transition:none}
+.opening-logo{left:var(--seal-x,50%);will-change:transform;transition:none}
+@media(prefers-reduced-motion:no-preference){
+ .page-home .hero-copy{opacity:var(--welcome-reveal,1);transform:translateY(calc((1 - var(--welcome-reveal,1))*48px))}
+ .page-home .program-panel{opacity:var(--welcome-reveal,1);transform:translateY(calc((1 - var(--welcome-reveal,1))*76px))}
+ .opening-title{will-change:transform,opacity}
+}
