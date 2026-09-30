@@ -281,3 +281,17 @@ html{scrollbar-gutter:stable}.home-hero{scroll-margin-top:104px}.hero-copy{paddi
  .page-home .program-panel{opacity:var(--welcome-reveal,1);transform:translateY(calc((1 - var(--welcome-reveal,1))*76px))}
  .opening-title{will-change:transform,opacity}
 }
+
+/* Original school photography, with generous breathing room. */
+.home-hero .program-panel{margin:28px 6% 28px 0;padding:44px 9%;min-width:0}
+.school-photo{margin:0;min-width:0}
+.school-photo img{display:block;width:100%;height:auto;object-fit:cover;border-radius:var(--panel-radius);border:1px solid var(--line)}
+.school-photo figcaption{font-size:.8rem;color:var(--muted);margin-top:12px;letter-spacing:.02em}
+.photo-landscape img{aspect-ratio:4/3}.photo-portrait img{aspect-ratio:3/4}
+.photo-banner{margin-block:60px 0;max-width:1100px}.photo-banner .school-photo img{aspect-ratio:4/3}
+.campus-pair{display:grid;grid-template-columns:.7fr 1.3fr;gap:32px;align-items:center;margin-bottom:70px}
+.life-gallery{padding-bottom:90px}.life-gallery h2{margin:20px 0 38px}.life-gallery-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:36px;align-items:start}
+.contact-photo{margin-bottom:30px}.contact-photo img{aspect-ratio:4/3;object-position:center 60%;border-color:#ffffff30}
+@media(prefers-reduced-motion:no-preference){.school-photo img{transition:filter .6s ease}.school-photo:hover img{filter:brightness(1.035)}}
+@media(max-width:800px){.home-hero .program-panel{margin:0 6% 32px;padding:34px 7%;gap:24px}.photo-banner{margin-top:36px}.campus-pair{gap:22px}.life-gallery-grid{gap:22px}.school-photo figcaption{font-size:.75rem}}
+@media(max-width:520px){.campus-pair,.life-gallery-grid{grid-template-columns:1fr}.campus-pair .photo-portrait{max-width:100%}.life-gallery{padding-bottom:60px}}
