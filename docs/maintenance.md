@@ -19,7 +19,6 @@ Edit `website/` in this repository. Keep all five pages and their shared assets 
 
 Netlify production deployments were paused by account credit limits when checked on **1 October 2026**. The existing inquiry handler was tested successfully on that date. Recheck the account before attempting another Netlify production deployment. Do not claim a paused host has received the latest design.
 
-`vercel.json` is retained for the optional Vercel project. A configuration file alone does not establish that its production deployment is current.
 
 ## GitHub Pages packaging
 
@@ -30,7 +29,6 @@ The project lives under `/lia/`. `scripts/build-pages.py` copies the source into
 The form is registered as `lia-inquiry` in Netlify. Notifications are configured for **logos.chiangmai@gmail.com**.
 
 - GitHub Pages submits by normal POST to Netlify and displays its confirmation page.
-- The Vercel configuration forwards `/api/inquiry` to that endpoint.
 - Local preview shows a message instead of sending an inquiry.
 
 Keep the registered form field names, hidden `form-name`, and honeypot consistent with the HTML. Preserve the approved school email notification. Never publish credentials or put email-service secrets in browser JavaScript.

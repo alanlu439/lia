@@ -155,7 +155,7 @@ if (form) {
     button.textContent = 'Sending…';
     status.hidden = true;
     try {
-      const response = await fetch(location.hostname.endsWith('.vercel.app') ? '/api/inquiry' : 'https://logos-international-academy.netlify.app/request-info/', {
+      const response = await fetch('https://logos-international-academy.netlify.app/request-info/', {
         method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
         body:new URLSearchParams(new FormData(form)).toString(),
         signal:AbortSignal.timeout(20000)

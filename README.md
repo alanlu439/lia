@@ -29,7 +29,6 @@ scripts/                 Validation and GitHub Pages packaging
 .github/                 Automated checks, publishing, and issue templates
 docs/                    Maintenance, content, and deployment guides
 netlify.toml             Existing Netlify site and form configuration
-vercel.json              Optional Vercel hosting configuration
 ```
 
 ## Preview locally
