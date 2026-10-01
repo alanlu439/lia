@@ -70,6 +70,9 @@ window.addEventListener('pageshow', () => {
 // Scroll-linked introduction without intercepting wheel or touch scrolling.
 const opening = document.querySelector('.opening');
 if (opening) {
+  const main = document.querySelector('#main');
+  const footer = document.querySelector('footer');
+  let focusWelcome = false;
   let frame = 0;
   let displayedProgress = null;
   let previousTime = 0;
@@ -89,7 +92,7 @@ if (opening) {
     // Finish the seal's movement before exchanging the two identical navy images.
     const eased = smooth(clamp(progress / .88));
     const target = header.querySelector('.official-logo').getBoundingClientRect();
-    const initialSize = Math.min(260, window.innerWidth * .46);
+    const initialSize = Math.min(260, window.innerWidth * .46, window.innerHeight * .3);
     opening.style.setProperty('--seal-x', `${window.innerWidth / 2 + (target.left + target.width / 2 - window.innerWidth / 2) * eased}px`);
     opening.style.setProperty('--seal-y', `${window.innerHeight * .38 + (target.top + target.height / 2 - window.innerHeight * .38) * eased}px`);
     opening.style.setProperty('--seal-size', `${initialSize + (target.width - initialSize) * eased}px`);
@@ -107,6 +110,12 @@ if (opening) {
     document.body.classList.toggle('opening-complete', reduced || progress === 1);
     header.inert = !reduced && progress < .9;
     opening.inert = !reduced && progress === 1;
+    main.inert = !reduced && progress < .9;
+    footer.inert = !reduced && progress < .9;
+    if (focusWelcome && (reduced || progress >= .9)) {
+      main.focus({preventScroll:true});
+      focusWelcome = false;
+    }
     if (displayedProgress !== destination) frame = requestAnimationFrame(renderOpening);
   };
   const scheduleOpening = () => { if (!frame) frame = requestAnimationFrame(renderOpening); };
@@ -114,9 +123,17 @@ if (opening) {
   window.addEventListener('resize', scheduleOpening);
   window.addEventListener('pageshow', scheduleOpening);
   motionPreference.addEventListener('change', scheduleOpening);
-  document.querySelector('.skip')?.addEventListener('click', () => {
-    document.querySelector('#welcome').scrollIntoView({behavior:'instant'});
-  });
+  const enterSite = event => {
+    event.preventDefault();
+    focusWelcome = true;
+    const welcome = document.querySelector('#welcome');
+    const openingHeight = document.querySelector('.opening-space').offsetHeight;
+    const top = Math.max(openingHeight * .84, welcome.getBoundingClientRect().top + window.scrollY - header.offsetHeight);
+    window.scrollTo({top, behavior:motionPreference.matches ? 'instant' : 'smooth'});
+    scheduleOpening();
+  };
+  document.querySelector('.skip')?.addEventListener('click', enterSite);
+  document.querySelector('.opening-enter')?.addEventListener('click', enterSite);
   renderOpening();
 }
 const form = document.querySelector('#inquiry-form');
