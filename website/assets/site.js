@@ -44,9 +44,11 @@ if (!motionPreference.matches && 'IntersectionObserver' in window) {
     document.querySelectorAll('.reveal-ready').forEach(reveal);
     observer.disconnect();
   };
-  document.querySelectorAll('.intro > div, .feature-copy, .value, .story-row, .process-head, .steps li, .mission-vision article, .serve-story > div, .cta-line, .photo, .about-panel, .contact-panel').forEach(element => {
+  document.querySelectorAll('.intro > div, .feature-copy, .value, .story-row, .process-head, .steps li, .mission-vision article, .serve-story > div, .cta-line, .photo, .school-photo, .about-panel, .contact-panel, .three-values > article, .admission-fit > div, .about-description, .official-list > div, .mission-banner > .wrap, .service-statement > .wrap, .footer-manifesto').forEach(element => {
     if (element.getBoundingClientRect().top >= window.innerHeight) {
       element.classList.add('reveal-ready');
+      const siblings = [...element.parentElement.children].filter(child => child.matches('.value, article, li, .story-row, .official-list > div'));
+      element.style.setProperty('--reveal-delay', `${Math.max(0, siblings.indexOf(element)) * 75}ms`);
       observer.observe(element);
     }
   });
