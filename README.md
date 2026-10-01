@@ -1,32 +1,62 @@
-# LIA Language School website
+<p align="center">
+  <img src="website/assets/lia-logo.png" width="110" alt="LIA school seal">
+</p>
 
-The website source of truth is the private `alanlu439/lia` GitHub repository. Netlify serves the five-page static website directly from `website/`.
+<h1 align="center">LIA Language School</h1>
+<p align="center">Website source and publishing tools · Chiang Mai, Thailand</p>
+<p align="center">
+  <a href="https://alanlu439.github.io/lia/">Visit the website</a> ·
+  <a href="https://logos-international-academy.alanlu439.chatgpt.site/">ChatGPT Sites</a> ·
+  <a href="docs/maintenance.md">Maintenance guide</a>
+</p>
 
-## Publishing
+## About this repository
 
-1. Edit files in `website/`.
-2. Run `python3 scripts/validate.py` and `node --check website/assets/site.js`.
-3. Commit and push to `main`.
-4. Confirm the connected Netlify project, `logos-international-academy`, successfully publishes the matching commit.
-5. Sync the same `website/` files into `../lia-site/dist/` and publish the existing ChatGPT Site using the Sites hosting workflow, preserving public access.
-6. Verify both deployments. A request to publish always means both hosts, with GitHub updated.
+This repository maintains the five-page LIA Language School website: **Home, Admission, Request Info, Serve, and About**. It contains the school-supplied branding, approved content, photography, and the tools used to publish the site.
 
-Netlify: https://logos-international-academy.netlify.app
+The website uses plain HTML, CSS, and JavaScript. No application framework or dependency installation is required.
 
-ChatGPT Site: https://logos-international-academy.alanlu439.chatgpt.site
+## Project structure
 
-Netlify uses `netlify.toml`, publishes `website/`, and needs no build command. The old ChatGPT Sites proxy has been removed with the owner's approval. Domain and access settings remain managed in Netlify. The old `public/` fallback is retained but is not published.
+```text
+website/                 Editable website source
+  assets/                Shared styles, scripts, logos, and photographs
+  admission/             Admission page
+  request-info/          Inquiry form and school contact information
+  serve/                 Service and community page
+  about/                 School identity and story
+  index.html             Home and landing experience
+scripts/                 Validation and GitHub Pages packaging
+.github/                 Automated checks, publishing, and issue templates
+docs/                    Maintenance, content, and deployment guides
+netlify.toml             Existing Netlify site and form configuration
+vercel.json              Optional Vercel hosting configuration
+```
 
-## Local preview
+## Preview locally
 
-Run `python3 -m http.server 4174 --directory website` and open http://localhost:4174/.
+```sh
+python3 -m http.server 4174 --directory website
+```
 
-## Design and content
+Open **http://localhost:4174/**. Inquiry delivery is disabled in the local preview.
 
-Georgia headings and Arial body text; navy, warm white, and a muted blue accent. The header uses the navy logo, and all footers use the supplied transparent white logo. Image frames use a 3:2 ratio. Motion respects reduced-motion preferences.
+## Validate changes
 
-School content and contact details come from the September 30, 2026 school information supplied by the owner. Use LIA Language School in website copy. Retain the original supplied seals and centered header at the owner’s request. No school photographs have been supplied; typographic program panels replace empty photography frames. The inquiry form submits to Netlify Forms without opening an email app. Netlify stores submissions and sends notifications to logos.chiangmai@gmail.com. Keep the form notification configured in the Netlify dashboard. The same public endpoint is used by the ChatGPT Site, with its origin allowed by the request-info response header. Tuition, documents, application dates, and detailed requirements remain unconfirmed.
+```sh
+python3 scripts/validate.py
+node --check website/assets/site.js
+python3 scripts/build-pages.py
+```
 
-Never commit secrets or credentials. Keep the repository private.
+GitHub Actions validates changes and publishes `main` to GitHub Pages. The generated `_site/` folder is not committed.
 
-The homepage uses a scroll-linked navy opening with the original seal and Soli Deo Gloria. Reduced-motion and no-JavaScript visitors get a static opening. Each page has its own layout treatments; retain the shared header and navigation.
+## Maintaining the website
+
+- [Maintenance and publishing](docs/maintenance.md)
+- [Content, branding, and photography](docs/content-guide.md)
+- [Contributing and reporting issues](CONTRIBUTING.md)
+
+The Request Info form uses **Netlify Forms** for inquiry collection and email notifications. GitHub Pages serves the website; it does not process or email submissions itself. See the maintenance guide for the current form behavior and hosting limitations.
+
+School facts must be verified before publication. Do not add unsupported fees, dates, policies, accreditation claims, or staff information. Supplied branding and photography are not offered under an open-source license.
