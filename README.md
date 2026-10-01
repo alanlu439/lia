@@ -6,7 +6,6 @@
 <p align="center">Website source and publishing tools · Chiang Mai, Thailand</p>
 <p align="center">
   <a href="https://alanlu439.github.io/lia/">Visit the website</a> ·
-  <a href="https://logos-international-academy.alanlu439.chatgpt.site/">ChatGPT Sites</a> ·
   <a href="docs/maintenance.md">Maintenance guide</a>
 </p>
 
