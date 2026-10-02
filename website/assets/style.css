@@ -450,3 +450,31 @@ select{appearance:none;-webkit-appearance:none;min-height:50px;padding-right:38p
 .arrow-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}.arrow-icon svg{display:block;width:23px;height:23px}.arrow-diagonal svg{rotate:-45deg}.opening-enter .arrow-icon{border:0;width:24px;height:24px}.opening-enter .arrow-icon svg{width:22px;height:22px}.hero-scroll .arrow-icon svg{width:22px;height:22px}
 .program-heading{display:block;text-align:center}.program-heading h2{width:100%;margin:0 auto;max-width:900px}.program-panel .program-choice[data-expanded="false"]{background:#eef1f3;color:var(--navy);border-color:#cbd4df}.program-panel .program-choice[data-expanded="false"] summary>span{color:var(--muted)}.program-choice[data-expanded="false"] summary i{transform:rotate(0)}
 @media(prefers-reduced-motion:no-preference){.arrow-icon svg{transition:translate .4s var(--motion-ease)}.button:hover .arrow-diagonal svg,.text-link:hover .arrow-diagonal svg{translate:2px -2px}.hero-scroll:hover .arrow-down svg{translate:0 3px}.program-choice.reveal-ready{opacity:0;transform:translateY(32px);transition:opacity .8s var(--motion-ease),transform 1s var(--motion-ease),background .45s ease,border-color .45s ease,box-shadow .45s ease;transition-delay:var(--reveal-delay,0ms),var(--reveal-delay,0ms),0ms,0ms,0ms}.program-choice.reveal-in{opacity:1;transform:none}}
+
+/* Secondary actions pair a clear label with a contained directional icon. */
+.text-link{width:fit-content;max-width:100%;min-height:50px;gap:20px;padding:9px 12px 9px 20px;border:1px solid #a8b5c3;border-radius:999px;background:transparent;color:var(--navy);font-size:.9rem;font-weight:600;line-height:1.4;white-space:normal;transition:background .3s ease,color .3s ease,border-color .3s ease}
+.text-link .arrow-icon{display:inline-flex;width:32px;height:32px;border-radius:50%;background:var(--navy);color:var(--paper);transform:none;transition:background .3s ease,color .3s ease}.text-link .arrow-icon svg{width:19px;height:19px}
+.text-link:hover,.text-link:focus-visible{background:var(--navy);border-color:var(--navy);color:var(--paper)}.text-link:hover .arrow-icon,.text-link:focus-visible .arrow-icon{background:var(--paper);color:var(--navy);transform:none}
+.mission-banner .text-link{border-color:#ffffff80;color:var(--paper)}.mission-banner .text-link .arrow-icon{background:var(--paper);color:var(--navy)}.mission-banner .text-link:hover,.mission-banner .text-link:focus-visible{background:var(--paper);border-color:var(--paper);color:var(--navy)}.mission-banner .text-link:hover .arrow-icon,.mission-banner .text-link:focus-visible .arrow-icon{background:var(--navy);color:var(--paper)}
+@media(max-width:420px){.text-link{gap:14px;padding-left:17px;font-size:.875rem}}
+
+/* Keep the office card comfortably inset and proportioned to its own width. */
+.page-request-info .inquiry{gap:clamp(28px,4vw,56px);align-items:start}
+.page-request-info .contact-panel{margin:0;padding:clamp(26px,3vw,44px);align-self:start;container-type:inline-size}
+.page-request-info .contact-panel h3{font-size:1.8rem;font-size:clamp(1.65rem,11cqi,2.5rem);line-height:1.2;letter-spacing:-.025em;overflow-wrap:break-word}
+.page-request-info .contact-panel>p{margin-top:24px}.page-request-info .contact-panel dl{margin-top:30px}.page-request-info .contact-panel dd{overflow-wrap:anywhere}
+@media(max-width:800px){.page-request-info .inquiry{gap:32px}.page-request-info .contact-panel{padding:30px}}
+@media(max-width:420px){.page-request-info .contact-panel{padding:26px}}
+
+/* Navigation dissolves the complete page through a clean white screen. */
+.header,main,.page-home .opening{view-transition-name:none!important}
+@media(prefers-reduced-motion:no-preference){
+ ::view-transition{background:#fff}
+ @keyframes white-page-out{from{opacity:1}to{opacity:0}}
+ @keyframes white-page-in{from{opacity:0}to{opacity:1}}
+ ::view-transition-group(root){animation:none!important}
+ ::view-transition-image-pair(root){isolation:isolate}
+ ::view-transition-old(root){animation:white-page-out .22s ease both!important;mix-blend-mode:normal}
+ ::view-transition-new(root){animation:white-page-in .34s .22s ease both!important;mix-blend-mode:normal}
+}
+@media(prefers-reduced-motion:reduce){::view-transition-old(root){animation:none!important;opacity:0}::view-transition-new(root){animation:none!important;opacity:1}}
