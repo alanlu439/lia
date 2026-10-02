@@ -633,3 +633,15 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
 .lca-content p+p{margin-top:22px}
 .partner-inline{text-decoration:underline;text-underline-offset:4px}
 @media(max-width:800px){.lca-content{grid-template-columns:1fr;gap:28px}}
+/* Asset-driven welcome progress, dissolving into the landing screen. */
+.site-loading{overflow:hidden}
+.site-loader{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#052c6055;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--paper);transition:opacity .6s ease,backdrop-filter .6s ease;pointer-events:auto}
+.loader-content{width:min(320px,75vw);text-align:center}
+.loader-eyebrow{font:600 .65rem/1.6 var(--sans);letter-spacing:.24em;color:#d2dfef}
+.loader-content p{font:italic clamp(1.6rem,4vw,2rem)/1.35 var(--serif);color:var(--paper);margin:18px 0 30px}
+.loader-track{height:2px;background:#ffffff30;overflow:hidden;border-radius:4px}
+.loader-track span{display:block;height:100%;width:0;background:#fff;box-shadow:0 0 12px #fff7;transition:width .25s ease}
+.loader-progress{display:block;margin-top:15px;font:500 .65rem/1.5 var(--sans);letter-spacing:.12em;color:#d2dfef}
+.loader-finished{opacity:0;backdrop-filter:blur(0);-webkit-backdrop-filter:blur(0);pointer-events:none}
+@media(prefers-reduced-motion:reduce){.site-loader,.loader-track span{transition:none}}
+.site-loader{display:none}.site-loading .site-loader,.site-loader.loader-finished{display:grid}

@@ -31,6 +31,15 @@ if (toggle && nav) {
       if (nav.classList.contains('open') && !header.contains(document.activeElement)) setMenu(false);
     });
   });
+  nav.addEventListener('click', event => {
+    const link = event.target.closest('a');
+    if (!link || !mobile.matches || !nav.classList.contains('open') || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') return;
+    const destination = new URL(link.href, location.href);
+    if (destination.origin !== location.origin) return;
+    event.preventDefault();
+    setMenu(false);
+    setTimeout(() => location.assign(destination.href), motionPreference.matches ? 0 : 280);
+  });
   mobile.addEventListener('change', () => setMenu(false));
 }
 const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 12);
@@ -130,8 +139,8 @@ if (opening) {
     document.body.style.setProperty('--welcome-reveal', reduced ? 1 : smooth(clamp((progress - .3) / .45)));
     document.body.classList.toggle('hero-visible', reduced || progress >= .58);
     document.body.classList.toggle('opening-complete', reduced || progress === 1);
-    header.inert = !reduced && progress < .58;
-    opening.inert = !reduced && progress === 1;
+    header.inert = document.documentElement.classList.contains('site-loading') || (!reduced && progress < .58);
+    opening.inert = document.documentElement.classList.contains('site-loading') || (!reduced && progress === 1);
     main.inert = !reduced && progress < .9;
     footer.inert = !reduced && progress < .9;
     if (focusWelcome && (reduced || progress >= .9)) {
@@ -254,3 +263,32 @@ document.querySelectorAll('.program-choice').forEach(details => {
   });
   details.addEventListener('toggle', () => { if (!animation) expanded = details.open; });
 });
+
+// Prepare all home images and fonts before revealing the landing screen.
+const loader = document.querySelector('.site-loader');
+if (loader) {
+  const roots = [...document.body.children].filter(element => element !== loader && element.tagName !== 'SCRIPT');
+  roots.forEach(element => element.inert = true);
+  const images = [...document.images];
+  images.forEach(image => image.loading = 'eager');
+  const tasks = images.map(image => image.decode().catch(() => {}));
+  tasks.push(document.fonts.ready);
+  tasks.push(document.readyState === 'complete' ? Promise.resolve() : new Promise(resolve => window.addEventListener('load', resolve, {once:true})));
+  let finished = 0;
+  const update = () => {
+    const percent = Math.round(finished / tasks.length * 100);
+    loader.querySelector('.loader-track span').style.width = `${percent}%`;
+    loader.querySelector('.loader-progress').textContent = `${percent}%`;
+  };
+  const ready = Promise.all(tasks.map(task => task.finally(() => { finished++; update(); })));
+  let timer;
+  const fallback = new Promise(resolve => { timer = setTimeout(resolve, 12000); });
+  Promise.race([ready, fallback]).then(() => {
+    clearTimeout(timer);
+    document.documentElement.classList.remove('site-loading');
+    loader.classList.add('loader-finished');
+    roots.forEach(element => element.inert = false);
+    window.dispatchEvent(new Event('resize'));
+    setTimeout(() => loader.remove(), motionPreference.matches ? 0 : 650);
+  });
+}
