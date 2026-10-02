@@ -92,9 +92,16 @@ if (opening) {
     // Finish the seal's movement before exchanging the two identical navy images.
     const eased = smooth(clamp(progress / .88));
     const target = header.querySelector('.official-logo').getBoundingClientRect();
-    const initialSize = Math.min(260, window.innerWidth * .46, window.innerHeight * .3);
-    opening.style.setProperty('--seal-x', `${window.innerWidth / 2 + (target.left + target.width / 2 - window.innerWidth / 2) * eased}px`);
-    opening.style.setProperty('--seal-y', `${window.innerHeight * .38 + (target.top + target.height / 2 - window.innerHeight * .38) * eased}px`);
+    const viewport = opening.getBoundingClientRect();
+    const initialSize = Math.min(260, viewport.width * .46, viewport.height * .3);
+    const titleHeight = opening.querySelector('.opening-title').offsetHeight;
+    const gap = Math.min(40, Math.max(16, viewport.height * .035));
+    const groupTop = (viewport.height - initialSize - gap - titleHeight) / 2;
+    const initialY = groupTop + initialSize / 2;
+    opening.style.setProperty('--title-top', `${groupTop + initialSize + gap}px`);
+    opening.style.setProperty('--initial-seal-y', `${initialY}px`);
+    opening.style.setProperty('--seal-x', `${viewport.width / 2 + (target.left + target.width / 2 - viewport.width / 2) * eased}px`);
+    opening.style.setProperty('--seal-y', `${initialY + (target.top + target.height / 2 - initialY) * eased}px`);
     opening.style.setProperty('--seal-size', `${initialSize + (target.width - initialSize) * eased}px`);
     opening.style.setProperty('--seal-dark', smooth(clamp((progress - .48) / .36)));
     opening.style.setProperty('--navy-fade', 1 - smooth(clamp((progress - .08) / .84)));
@@ -121,6 +128,7 @@ if (opening) {
   const scheduleOpening = () => { if (!frame) frame = requestAnimationFrame(renderOpening); };
   window.addEventListener('scroll', scheduleOpening, {passive:true});
   window.addEventListener('resize', scheduleOpening);
+  window.visualViewport?.addEventListener('resize', scheduleOpening);
   window.addEventListener('pageshow', scheduleOpening);
   motionPreference.addEventListener('change', scheduleOpening);
   const enterSite = event => {
