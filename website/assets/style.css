@@ -475,8 +475,8 @@ select{appearance:none;-webkit-appearance:none;min-height:50px;padding-right:38p
  @keyframes white-page-in{from{opacity:0}to{opacity:1}}
  ::view-transition-group(root){animation:none!important}
  ::view-transition-image-pair(root){isolation:isolate}
- ::view-transition-old(root){animation:white-page-out .22s ease both!important;mix-blend-mode:normal}
- ::view-transition-new(root){animation:white-page-in .34s .22s ease both!important;mix-blend-mode:normal}
+ ::view-transition-old(root){animation:white-page-out .28s cubic-bezier(.4,0,1,1) both!important;mix-blend-mode:normal}
+ ::view-transition-new(root){animation:white-page-in .48s .26s cubic-bezier(.16,1,.3,1) both!important;mix-blend-mode:normal}
 }
 @media(prefers-reduced-motion:reduce){::view-transition-old(root){animation:none!important;opacity:0}::view-transition-new(root){animation:none!important;opacity:1}}
 
