@@ -585,3 +585,5 @@ main>.intro.section,main>.feature.section,main>.about-overview.section,main>.ser
 .page-about .mission-vision h2{margin-block:32px 30px}
 .page-about .about-description p+p,.page-about .intro p+p{margin-top:26px}
 @media(min-width:801px) and (max-width:1050px){.page-about .about-overview{column-gap:44px}.page-about .mission-vision{gap:24px}.page-about .mission-vision article{padding:36px}.page-about .mission-vision p{font-size:.95rem}}
+/* Keep the About overview clear of the introductory banner. */
+.page-about main>.about-overview{padding-top:var(--section-space);margin-top:0}
