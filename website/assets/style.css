@@ -619,3 +619,5 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
 }
 @media(prefers-reduced-motion:reduce){.header nav{transition:none!important}}
 @media(max-width:960px){.header nav a:not(.nav-cta)::after,.header nav a[aria-current=page]:not(.nav-cta)::after{display:block!important;content:'›';position:static!important;background:none!important;width:auto!important;height:auto!important;inset:auto!important;font:400 1.4rem/1 var(--serif);color:#526174}}
+/* Full-width dropdown with the existing rounded navigation buttons. */
+@media(max-width:960px){.header nav,.header nav.open{top:100%;left:0;right:0;width:100%;border-radius:0 0 22px 22px;padding:18px var(--page-gutter) 22px;border-inline:0;transform-origin:top center}}
