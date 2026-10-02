@@ -478,3 +478,31 @@ select{appearance:none;-webkit-appearance:none;min-height:50px;padding-right:38p
  ::view-transition-new(root){animation:white-page-in .34s .22s ease both!important;mix-blend-mode:normal}
 }
 @media(prefers-reduced-motion:reduce){::view-transition-old(root){animation:none!important;opacity:0}::view-transition-new(root){animation:none!important;opacity:1}}
+
+/* About: mission, vision, and the three priorities. */
+.page-about .mission-vision{width:min(1240px,88%);margin-inline:auto;padding:0;gap:22px;background:transparent;overflow:visible;align-items:stretch}
+.page-about .mission-vision article{position:relative;overflow:hidden;border-radius:24px;padding:clamp(30px,4.5vw,64px);background:var(--navy);color:var(--paper);display:flex;flex-direction:column;min-width:0}
+.page-about .mission-vision article::after{content:'';position:absolute;width:260px;height:260px;right:-150px;bottom:-150px;border:1px solid #ffffff30;border-radius:50%;box-shadow:0 0 0 40px #ffffff08,0 0 0 80px #ffffff05;pointer-events:none}
+.page-about .mission-vision article+article{background:#e6edf4;color:var(--navy)}
+.page-about .mission-vision article+article::after{border-color:#052c6026;box-shadow:0 0 0 40px #052c6005,0 0 0 80px #052c6003}
+.page-about .mission-vision .eyebrow{display:flex;align-items:center;gap:14px}
+.page-about .mission-vision .eyebrow::before{content:'';width:30px;height:2px;background:currentColor}
+.page-about .mission-vision h2{font-size:clamp(2.5rem,4.5vw,4.1rem);margin-block:38px 28px;line-height:1.08}
+.page-about .mission-vision article:first-child em{color:#c7daef}
+.page-about .mission-vision p{color:inherit;line-height:1.8;font-size:1rem;max-width:30rem;position:relative;z-index:1}
+.page-about .mission-vision article:first-child p{color:#e2ebf6}
+.page-about .philosophy{background:transparent;padding-block:90px}
+.page-about .philosophy .section-heading{display:block;text-align:center;margin-bottom:44px}
+.page-about .philosophy .section-heading .eyebrow{color:var(--muted);margin-bottom:18px}
+.page-about .philosophy h2{font-size:clamp(2.5rem,4.5vw,4.1rem)}
+.page-about .philosophy .values{gap:22px;padding:0;align-items:stretch}
+.page-about .philosophy .value{min-width:0;padding:32px;border:1px solid #d5dde6;border-radius:22px;background:#f0f3f7;position:relative}
+.page-about .philosophy .value>span{font:italic 3.5rem/1 var(--serif);color:var(--navy);margin-bottom:40px}
+.page-about .philosophy .value h3{font-size:clamp(1.65rem,2.4vw,2.1rem);padding-top:24px;border-top:1px solid #bfcbd9;margin-bottom:18px}
+.page-about .philosophy .value p{font-size:.95rem;line-height:1.8}
+.page-about .philosophy .value:first-child{background:var(--navy);color:var(--paper);border-color:var(--navy)}
+.page-about .philosophy .value:first-child>span{color:#c7daef}
+.page-about .philosophy .value:first-child h3{border-color:#ffffff40}
+.page-about .philosophy .value:first-child p{color:#e2ebf6}
+@media(max-width:800px){.page-about .mission-vision{gap:20px}.page-about .mission-vision article{padding:36px}.page-about .mission-vision h2{margin-top:28px}.page-about .philosophy{padding-block:65px}.page-about .philosophy .value{padding:30px}.page-about .philosophy .value>span{margin-bottom:25px}}
+@media(max-width:420px){.page-about .mission-vision article{padding:28px}.page-about .philosophy .value{padding:28px}}
