@@ -579,3 +579,9 @@ main>.intro.section,main>.feature.section,main>.about-overview.section,main>.ser
 .page-about .mission-vision{margin-block:0}
 .page-request-info .page-intro{margin-bottom:0}
 .page-serve .service-statement,.mission-banner{padding-block:var(--section-space)}
+/* Give the About overview and inset panels distinct breathing room. */
+.page-about .mission-vision{padding-block:0;margin-top:var(--section-space)}
+.page-about .mission-vision article{padding:clamp(32px,4vw,56px)}
+.page-about .mission-vision h2{margin-block:32px 30px}
+.page-about .about-description p+p,.page-about .intro p+p{margin-top:26px}
+@media(min-width:801px) and (max-width:1050px){.page-about .about-overview{column-gap:44px}.page-about .mission-vision{gap:24px}.page-about .mission-vision article{padding:36px}.page-about .mission-vision p{font-size:.95rem}}
