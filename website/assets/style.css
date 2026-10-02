@@ -621,3 +621,15 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
 @media(max-width:960px){.header nav a:not(.nav-cta)::after,.header nav a[aria-current=page]:not(.nav-cta)::after{display:block!important;content:'›';position:static!important;background:none!important;width:auto!important;height:auto!important;inset:auto!important;font:400 1.4rem/1 var(--serif);color:#526174}}
 /* Full-width dropdown with the existing rounded navigation buttons. */
 @media(max-width:960px){.header nav,.header nav.open{top:100%;left:0;right:0;width:100%;border-radius:0 0 22px 22px;padding:18px var(--page-gutter) 22px;border-inline:0;transform-origin:top center}}
+/* Equal space around home priorities, without stacking two section gaps. */
+.page-home main>.values{margin-block:0}
+.page-home main>.feature.section{padding-block:var(--section-space)}
+.lca-partnership{margin-block:0 var(--section-space);border:1px solid #d3dce6;border-radius:24px;overflow:hidden;background:#eef2f6}
+.lca-identity{display:block;background:#112c69}
+.lca-identity img{display:block;width:100%;height:auto}
+.lca-content{display:grid;grid-template-columns:1fr 1.2fr;gap:var(--content-gap);padding:clamp(28px,4vw,56px)}
+.lca-content h2{font-size:clamp(2.2rem,3vw,3.1rem);margin-top:24px}
+.lca-content p{font-size:.95rem;line-height:1.85}
+.lca-content p+p{margin-top:22px}
+.partner-inline{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:800px){.lca-content{grid-template-columns:1fr;gap:28px}}
