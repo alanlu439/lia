@@ -517,3 +517,10 @@ select{appearance:none;-webkit-appearance:none;min-height:50px;padding-right:38p
 @media(prefers-reduced-motion:reduce){.opening-space::after{display:none}}
 .opening-space,.opening-shade{background:linear-gradient(to bottom,rgb(var(--opening-sky,5 44 96)) 0%,#2d557e 60%,#365f8c 100%)}
 .opening-space::after{top:calc(100% - 1px)}
+
+/* Preserve the solid landing navy; introduce deeper blues only on scroll. */
+.opening-space{background:linear-gradient(to bottom,rgb(var(--opening-sky,5 44 96)) 0%,#0b2c50 60%,#10335b 100%)}
+.opening-space::after{background:linear-gradient(to bottom,#10335b 0%,#10335bba 25%,#10335b50 60%,#10335b00 100%)}
+.opening-shade{background:var(--navy)}
+.opening-shade::after{content:'';position:absolute;inset:0;opacity:var(--gradient-blend,0);background:linear-gradient(to bottom,rgb(var(--opening-sky,5 44 96)) 0%,#0b2c50 60%,#10335b 100%)}
+@media(prefers-reduced-motion:reduce){.opening-shade::after{display:none}}

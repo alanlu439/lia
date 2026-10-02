@@ -106,9 +106,10 @@ if (opening) {
     opening.style.setProperty('--seal-dark', smooth(clamp((progress - .48) / .36)));
     opening.style.setProperty('--navy-fade', 1 - smooth(clamp((progress - .08) / .84)));
     const skyBlend = smooth(clamp(progress / .8));
-    const skyTone = [5, 44, 96].map((channel, index) => Math.round(channel + ([72, 110, 153][index] - channel) * skyBlend)).join(' ');
+    const skyTone = [5, 44, 96].map((channel, index) => Math.round(channel + ([16, 51, 91][index] - channel) * skyBlend)).join(' ');
     opening.style.setProperty('--opening-sky', skyTone);
     document.querySelector('.opening-space').style.setProperty('--opening-sky', skyTone);
+    opening.style.setProperty('--gradient-blend', smooth(clamp(progress / .35)));
     opening.style.setProperty('--slogan-opacity', 1 - smooth(clamp(progress / .68)));
     opening.style.setProperty('--slogan-scale', 1 + smooth(progress) * 1.35);
     opening.style.setProperty('--slogan-y', `${smooth(progress) * 160}px`);
