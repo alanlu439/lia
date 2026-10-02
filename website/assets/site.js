@@ -267,6 +267,39 @@ document.querySelectorAll('.program-choice').forEach(details => {
 // Prepare all home images and fonts before revealing the landing screen.
 const loader = document.querySelector('.site-loader');
 if (loader) {
+  const welcomeMessages = [
+    'Preparing your welcome.',
+    'A warm welcome awaits.',
+    'Discover a place to grow.',
+    'A new chapter begins here.',
+    'Come grow in faith.',
+    'Learning with purpose awaits.',
+    'Heart and skill, together.',
+    'Explore life at LIA.',
+    'A calling to serve begins here.',
+    'Welcome to our learning community.'
+  ];
+  let message;
+  try {
+    const saved = JSON.parse(sessionStorage.getItem('lia-welcome-shuffle') || 'null');
+    let remaining = saved?.remaining;
+    if (!Array.isArray(remaining) || !remaining.length || remaining.some(index => !Number.isInteger(index) || index < 0 || index >= welcomeMessages.length)) {
+      remaining = welcomeMessages.map((_, index) => index);
+      for (let index = remaining.length - 1; index > 0; index--) {
+        const random = Math.floor(Math.random() * (index + 1));
+        [remaining[index], remaining[random]] = [remaining[random], remaining[index]];
+      }
+      if (remaining[remaining.length - 1] === saved?.last) {
+        [remaining[0], remaining[remaining.length - 1]] = [remaining[remaining.length - 1], remaining[0]];
+      }
+    }
+    const index = remaining.pop();
+    message = welcomeMessages[index];
+    sessionStorage.setItem('lia-welcome-shuffle', JSON.stringify({remaining, last:index}));
+  } catch {
+    message = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+  }
+  loader.querySelector('.loader-content p').textContent = message;
   const roots = [...document.body.children].filter(element => element !== loader && element.tagName !== 'SCRIPT');
   roots.forEach(element => element.inert = true);
   const images = [...document.images];
