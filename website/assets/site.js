@@ -1,3 +1,12 @@
+// Match the tab icon to the visitor's color scheme.
+const favicon = document.querySelector('link[rel="icon"]');
+const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+const updateFavicon = () => {
+  if (favicon) favicon.href = favicon.href.replace(/lia-logo(?:-white)?\.png/, colorScheme.matches ? 'lia-logo-white.png' : 'lia-logo.png');
+};
+updateFavicon();
+colorScheme.addEventListener('change', updateFavicon);
+
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#main-nav');
 const header = document.querySelector('.header');
