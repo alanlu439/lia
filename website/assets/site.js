@@ -38,7 +38,7 @@ if (toggle && nav) {
     if (destination.origin !== location.origin) return;
     event.preventDefault();
     setMenu(false);
-    setTimeout(() => location.assign(destination.href), motionPreference.matches ? 0 : 280);
+    setTimeout(() => location.assign(destination.href), motionPreference.matches ? 0 : 230);
   });
   mobile.addEventListener('change', () => setMenu(false));
 }
