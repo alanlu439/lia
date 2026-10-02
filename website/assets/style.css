@@ -651,3 +651,5 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
 
 .registration-statement{padding-block:20px;background:#031c3a;border-top:1px solid #ffffff1f;text-align:center}
 .registration-statement p{max-width:1240px;font-size:.7rem;line-height:1.8;color:#c7d6e8}
+.footer-manifesto{min-width:0;container-type:inline-size}
+.footer-manifesto>span{max-width:none;white-space:nowrap;font-size:.85rem;font-size:min(.85rem,3.65cqi)}
