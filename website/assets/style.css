@@ -587,3 +587,23 @@ main>.intro.section,main>.feature.section,main>.about-overview.section,main>.ser
 @media(min-width:801px) and (max-width:1050px){.page-about .about-overview{column-gap:44px}.page-about .mission-vision{gap:24px}.page-about .mission-vision article{padding:36px}.page-about .mission-vision p{font-size:.95rem}}
 /* Keep the About overview clear of the introductory banner. */
 .page-about main>.about-overview{padding-top:var(--section-space);margin-top:0}
+/* A composed closing: school identity, purpose, and office details. */
+footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
+.footer-top{grid-template-columns:1.1fr 1fr;gap:44px 80px;padding-block:64px}
+.footer-brand{grid-column:1/-1;gap:20px;padding-bottom:30px;border-bottom:1px solid #ffffff26;width:100%}
+.footer-brand .official-logo{width:78px;height:78px}
+.footer-brand .brand-name{font-size:2.5rem;letter-spacing:.06em}
+.footer-brand .brand-name>span{font-size:.68rem;letter-spacing:.22em;margin-top:10px}
+.footer-top .footer-manifesto p{font-size:clamp(2.3rem,4vw,3.5rem);line-height:1.2;letter-spacing:-.03em}
+.footer-manifesto>span{font-size:.85rem;max-width:27ch;line-height:1.8;margin-top:24px}
+.footer-contact{display:grid;gap:0;max-width:none;align-self:start;font-size:.85rem}
+.footer-contact a{display:block;width:100%;padding:17px 0;border-bottom:1px solid #ffffff26;text-decoration:none;line-height:1.8;overflow-wrap:anywhere;transition:color .2s}
+.footer-contact a:first-child{padding-top:0}
+.footer-contact a::before{content:attr(data-contact);display:block;color:#b7cce4;font-size:.62rem;text-transform:uppercase;letter-spacing:.15em;font-weight:600;margin-bottom:6px}
+.footer-contact a:hover{color:#b7cce4}
+.footer-contact>span{margin-top:18px;font-size:.75rem;color:#b7cce4}
+.footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;padding-block:26px;font-size:.7rem;border-top:1px solid #ffffff26;color:#c7d6e8}
+.footer-bottom nav{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
+.footer-bottom nav a{padding:8px 0;min-height:44px;display:inline-flex;align-items:center}
+@media(max-width:800px){.footer-top{grid-template-columns:1fr;gap:36px;padding-block:48px}.footer-brand{grid-column:auto;padding-bottom:26px}.footer-top .footer-manifesto p{font-size:2.5rem}.footer-contact{max-width:none}.footer-bottom{align-items:start;gap:16px}.footer-bottom nav{order:-1;width:100%;gap:4px 22px}.footer-bottom>span:last-child{margin-left:auto}}
+@media(max-width:420px){.footer-brand .official-logo{width:64px;height:64px}.footer-brand .brand-name{font-size:2.15rem}.footer-brand .brand-name>span{font-size:.58rem}.footer-brand{gap:16px}.footer-bottom>span:last-child{margin-left:0}}
