@@ -44,10 +44,10 @@ if (!motionPreference.matches && 'IntersectionObserver' in window) {
     document.querySelectorAll('.reveal-ready').forEach(reveal);
     observer.disconnect();
   };
-  document.querySelectorAll('.intro > div, .feature-copy, .value, .story-row, .process-head, .steps li, .mission-vision article, .serve-story > div, .cta-line, .photo, .school-photo, .about-panel, .contact-panel, .three-values > article, .admission-fit > div, .about-description, .official-list > div, .mission-banner > .wrap, .service-statement > .wrap, .footer-manifesto').forEach(element => {
+  document.querySelectorAll('.program-heading, .program-choice, .intro > div, .feature-copy, .value, .story-row, .process-head, .steps li, .mission-vision article, .serve-story > div, .cta-line, .photo, .school-photo, .about-panel, .contact-panel, .three-values > article, .admission-fit > div, .about-description, .official-list > div, .mission-banner > .wrap, .service-statement > .wrap, .footer-manifesto').forEach(element => {
     if (element.getBoundingClientRect().top >= window.innerHeight) {
       element.classList.add('reveal-ready');
-      const siblings = [...element.parentElement.children].filter(child => child.matches('.value, article, li, .story-row, .official-list > div'));
+      const siblings = [...element.parentElement.children].filter(child => child.matches('.program-choice, .value, article, li, .story-row, .official-list > div'));
       element.style.setProperty('--reveal-delay', `${Math.max(0, siblings.indexOf(element)) * 75}ms`);
       observer.observe(element);
     }
@@ -193,7 +193,7 @@ if (form) {
       feedback('We couldn’t confirm your submission. Your entries are still here. Please try again, or contact logos.chiangmai@gmail.com or 089-329-0517.', 'error');
     } finally {
       button.disabled = false;
-      button.innerHTML = 'Request Information <span aria-hidden="true">↗</span>';
+      button.innerHTML = 'Request Information <span aria-hidden="true" class="arrow-icon arrow-diagonal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>';
     }
   });
 }
@@ -202,12 +202,15 @@ if (form) {
 document.querySelectorAll('.program-choice').forEach(details => {
   const summary = details.querySelector('summary');
   let animation;
+  let answerAnimation;
+  const answer = details.querySelector('p');
   let expanded = details.open;
   summary.addEventListener('click', event => {
     if (motionPreference.matches || !details.animate) return;
     event.preventDefault();
     const start = details.getBoundingClientRect().height;
     animation?.cancel();
+    answerAnimation?.cancel();
     expanded = !expanded;
     details.dataset.expanded = String(expanded);
     details.style.height = '';
@@ -219,9 +222,14 @@ document.querySelectorAll('.program-choice').forEach(details => {
     const end = expanded ? details.getBoundingClientRect().height : collapsed;
     details.classList.add('is-expanding');
     animation = details.animate([{height: `${start}px`}, {height: `${end}px`}], {
-      duration: 520, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'both'
+      duration: 650, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'both'
     });
+    answerAnimation = answer.animate(expanded
+      ? [{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'translateY(0)'}]
+      : [{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-6px)'}],
+      {duration:expanded ? 480 : 220, delay:expanded ? 90 : 0, easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
     animation.onfinish = () => {
+      answerAnimation?.cancel();
       details.open = expanded;
       animation.cancel();
       animation = null;
