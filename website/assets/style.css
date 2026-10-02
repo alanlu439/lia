@@ -572,3 +572,10 @@ main>.intro.section,main>.feature.section,main>.about-overview.section,main>.ser
 /* Full-bleed bands retain aligned inner content. */
 .section-band.wrap:not(.mission-vision){width:100%;max-width:none;margin-inline:0}
 .page-home.hero-visible .header{pointer-events:auto}
+/* Avoid doubled gaps where padded sections meet inset panels. */
+.page-admission .page-intro{border-bottom:0}
+.page-admission .admission-fit{border:0}
+.page-admission .admission-details{margin-top:0;margin-bottom:var(--section-space)}
+.page-about .mission-vision{margin-block:0}
+.page-request-info .page-intro{margin-bottom:0}
+.page-serve .service-statement,.mission-banner{padding-block:var(--section-space)}
