@@ -510,3 +510,10 @@ select{appearance:none;-webkit-appearance:none;min-height:50px;padding-right:38p
 /* Carry the photograph's blue sky into the scrolling opening. */
 .opening-space{background:linear-gradient(155deg,rgb(var(--opening-sky,5 44 96)) 0%,#163e6c 65%,#052c60 100%)}
 .opening-shade{background:linear-gradient(155deg,rgb(var(--opening-sky,5 44 96)) 0%,#052c60 85%)}
+/* Dissolve the end of the opening into the photograph below it. */
+.opening-space{position:relative;background:linear-gradient(155deg,rgb(var(--opening-sky,5 44 96)) 0%,#254d78 65%,#365f8c 100%)}
+.opening-space::after{content:'';position:absolute;z-index:1;pointer-events:none;left:0;right:0;top:100%;height:clamp(120px,22svh,220px);background:linear-gradient(to bottom,#365f8c 0%,#365f8cba 25%,#365f8c50 60%,#365f8c00 100%)}
+.opening-shade{background:linear-gradient(155deg,rgb(var(--opening-sky,5 44 96)) 0%,#254d78 65%,#365f8c 100%)}
+@media(prefers-reduced-motion:reduce){.opening-space::after{display:none}}
+.opening-space,.opening-shade{background:linear-gradient(to bottom,rgb(var(--opening-sky,5 44 96)) 0%,#2d557e 60%,#365f8c 100%)}
+.opening-space::after{top:calc(100% - 1px)}
