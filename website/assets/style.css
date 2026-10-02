@@ -506,3 +506,7 @@ select{appearance:none;-webkit-appearance:none;min-height:50px;padding-right:38p
 .page-about .philosophy .value:first-child p{color:#e2ebf6}
 @media(max-width:800px){.page-about .mission-vision{gap:20px}.page-about .mission-vision article{padding:36px}.page-about .mission-vision h2{margin-top:28px}.page-about .philosophy{padding-block:65px}.page-about .philosophy .value{padding:30px}.page-about .philosophy .value>span{margin-bottom:25px}}
 @media(max-width:420px){.page-about .mission-vision article{padding:28px}.page-about .philosophy .value{padding:28px}}
+
+/* Carry the photograph's blue sky into the scrolling opening. */
+.opening-space{background:linear-gradient(155deg,rgb(var(--opening-sky,5 44 96)) 0%,#163e6c 65%,#052c60 100%)}
+.opening-shade{background:linear-gradient(155deg,rgb(var(--opening-sky,5 44 96)) 0%,#052c60 85%)}
