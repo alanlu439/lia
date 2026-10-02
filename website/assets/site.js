@@ -112,8 +112,9 @@ if (opening) {
     const target = header.querySelector('.official-logo').getBoundingClientRect();
     const viewport = opening.getBoundingClientRect();
     const initialSize = Math.min(260, viewport.width * .46, viewport.height * .3);
+    const gap = Math.min(40, Math.max(16, viewport.height * .04));
+    opening.style.setProperty('--landing-gap', `${gap}px`);
     const titleHeight = opening.querySelector('.opening-title').offsetHeight;
-    const gap = Math.min(40, Math.max(16, viewport.height * .035));
     const groupTop = (viewport.height - initialSize - gap - titleHeight) / 2;
     const initialY = groupTop + initialSize / 2;
     opening.style.setProperty('--title-top', `${groupTop + initialSize + gap}px`);

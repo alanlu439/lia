@@ -645,3 +645,6 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
 .loader-finished{opacity:0;backdrop-filter:blur(0);-webkit-backdrop-filter:blur(0);pointer-events:none}
 @media(prefers-reduced-motion:reduce){.site-loader,.loader-track span{transition:none}}
 .site-loader{display:none}.site-loading .site-loader,.site-loader.loader-finished{display:grid}
+
+/* Match the two gaps within the centered landing identity. */
+.opening-title>span{margin-top:var(--landing-gap,32px)}
