@@ -121,7 +121,7 @@ if (opening) {
     document.body.style.setProperty('--welcome-reveal', reduced ? 1 : smooth(clamp((progress - .3) / .45)));
     document.body.classList.toggle('hero-visible', reduced || progress >= .58);
     document.body.classList.toggle('opening-complete', reduced || progress === 1);
-    header.inert = !reduced && progress < .9;
+    header.inert = !reduced && progress < .58;
     opening.inert = !reduced && progress === 1;
     main.inert = !reduced && progress < .9;
     footer.inert = !reduced && progress < .9;

@@ -568,3 +568,7 @@ main>.intro.section,main>.feature.section,main>.about-overview.section,main>.ser
 .page-home main>.values{margin-block:0 var(--section-space)}
 @media(max-width:800px){:root{--page-gutter:6%;--section-space:56px;--content-gap:32px}}
 @media(max-width:420px){:root{--page-gutter:24px;--section-space:48px}}
+
+/* Full-bleed bands retain aligned inner content. */
+.section-band.wrap:not(.mission-vision){width:100%;max-width:none;margin-inline:0}
+.page-home.hero-visible .header{pointer-events:auto}
