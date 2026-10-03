@@ -619,3 +619,25 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
  .menu-toggle:hover,.menu-toggle[aria-expanded=true]{background:#e5edf5}
  .header nav{max-height:calc(100svh - 88px)}
 }
+
+/* An approachable, clearly grouped inquiry form. */
+.page-request-info #inquiry-form{border:1px solid #d6dfeb;border-radius:28px;padding:clamp(24px,3.2vw,48px);background:#fffdf9;box-shadow:0 16px 50px #052c6008}
+#inquiry-form .form-intro{margin-bottom:36px;padding-bottom:30px;border-bottom:1px solid var(--line)}
+#inquiry-form .form-intro .eyebrow{display:block;color:var(--navy);font-size:.66rem;letter-spacing:.14em;margin-bottom:18px}
+#inquiry-form .form-intro h2{font-size:clamp(2rem,3vw,3rem);line-height:1.16;max-width:18ch}
+#inquiry-form .form-intro p{font-size:.85rem;line-height:1.8;margin-top:18px}
+.inquiry-group{min-width:0;padding:0;margin:0 0 32px;border:0}
+.inquiry-group legend{display:flex;align-items:center;gap:12px;padding:0;margin-bottom:22px;font-weight:600;color:var(--navy);font-size:.95rem}
+.inquiry-step{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex-shrink:0;border-radius:50%;background:#e6eef7;color:var(--navy);font-size:.65rem;letter-spacing:.03em}
+.group-note{font-size:.73rem;line-height:1.7;margin:-10px 0 20px;color:var(--muted)}
+#inquiry-form .form-grid{gap:22px 24px;align-items:end}
+#inquiry-form .field{gap:10px}
+#inquiry-form .field label{font-size:.76rem;line-height:1.5;font-weight:500}
+#inquiry-form input:not([type=hidden]),#inquiry-form select,#inquiry-form textarea{border-radius:12px;border-color:#d0dbe8;background:#f5f7fa;padding:14px 16px;transition:border-color .2s,box-shadow .2s,background .2s}
+#inquiry-form input:focus,#inquiry-form select:focus,#inquiry-form textarea:focus{background:white;border-color:var(--navy);box-shadow:0 0 0 3px #052c6010}
+#inquiry-form textarea{min-height:150px}
+#inquiry-form .inquiry-privacy{font-size:.68rem;line-height:1.8;margin:8px 0 28px;color:var(--muted)}
+#inquiry-form .form-submit{border-top:1px solid var(--line);padding-top:26px;margin-top:0}
+#inquiry-form .form-submit .button{border-radius:999px;padding:14px 24px;min-width:160px}
+@media(max-width:960px){.page-request-info .inquiry{grid-template-columns:minmax(0,1fr)}.page-request-info .contact-panel dl{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}}
+@media(max-width:480px){#inquiry-form .form-grid{grid-template-columns:1fr}.page-request-info .contact-panel dl{grid-template-columns:1fr}.page-request-info #inquiry-form{border-radius:22px}#inquiry-form .form-submit{gap:16px}#inquiry-form .form-submit .button{width:100%}}
