@@ -220,7 +220,7 @@ if (form) {
       feedback('We couldn’t confirm your submission. Your entries are still here. Please try again, or contact logos.chiangmai@gmail.com or 089-329-0517.', 'error');
     } finally {
       button.disabled = false;
-      button.innerHTML = 'Contact <span aria-hidden="true" class="arrow-icon arrow-diagonal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>';
+      button.innerHTML = 'Inquire <span aria-hidden="true" class="arrow-icon arrow-diagonal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>';
     }
   });
 }
