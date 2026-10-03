@@ -304,18 +304,19 @@ if (loader) {
   loader.querySelector('.loader-content p').textContent = message;
   const roots = [...document.body.children].filter(element => element !== loader && element.tagName !== 'SCRIPT');
   roots.forEach(element => element.inert = true);
-  const images = [...document.images];
-  images.forEach(image => image.loading = 'eager');
+  // Decode only the landing identity and first hero; lower sections stay lazy.
+  const images = [...document.querySelectorAll('.opening img, .header img, .hero-scene img')];
   const tasks = images.map(image => image.decode().catch(() => {}));
+  tasks.push(document.fonts.load('400 16px Montserrat'));
+  tasks.push(document.fonts.load('600 16px Montserrat'));
   tasks.push(document.fonts.ready);
-  tasks.push(document.readyState === 'complete' ? Promise.resolve() : new Promise(resolve => window.addEventListener('load', resolve, {once:true})));
   let finished = 0;
   const update = () => {
     const percent = Math.round(finished / tasks.length * 100);
     loader.querySelector('.loader-track span').style.width = `${percent}%`;
     loader.querySelector('.loader-progress').textContent = `${percent}%`;
   };
-  const ready = Promise.all(tasks.map(task => task.finally(() => { finished++; update(); })));
+  const ready = Promise.allSettled(tasks.map(task => task.finally(() => { finished++; update(); })));
   let timer;
   const fallback = new Promise(resolve => { timer = setTimeout(resolve, 12000); });
   Promise.race([ready, fallback]).then(() => {
