@@ -13,6 +13,7 @@ const header = document.querySelector('.header');
 const mobile = window.matchMedia('(max-width: 960px)');
 function setMenu(open, restoreFocus = false) {
   toggle.setAttribute('aria-expanded', String(open));
+  toggle.querySelector('.menu-label').textContent = open ? 'Close' : 'Menu';
   nav.classList.toggle('open', open);
   nav.inert = mobile.matches && !open;
   if (restoreFocus) toggle.focus();

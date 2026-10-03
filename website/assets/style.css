@@ -592,3 +592,30 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
 .footer-manifesto>span{max-width:none;white-space:nowrap;font-size:.85rem}.tagline-compact{display:none}@media(max-width:420px){.tagline-full{display:none}.tagline-compact{display:inline}}
 
 .inquiry-privacy{margin-top:18px;font-size:.8rem;line-height:1.8;max-width:none}
+
+/* Compact masthead. Compensating margin keeps its scroll footprint stable. */
+.header{height:96px;margin-bottom:0;border-bottom-color:transparent;transition:height .25s ease,margin-bottom .25s ease,box-shadow .25s ease,opacity .35s ease}
+.header.is-scrolled{height:80px;margin-bottom:16px;box-shadow:0 5px 20px #052c6010}
+.header .official-logo{width:72px;height:72px;transition:width .25s ease,height .25s ease}
+.header.is-scrolled .official-logo{width:60px;height:60px}
+.page-home .header{transition:height .25s ease,margin-bottom .25s ease,opacity .35s ease,box-shadow .25s ease}
+.header-inquire{display:none}
+@media(min-width:961px){
+ .header nav a[aria-current=page]:not(.nav-cta){background:transparent}
+ .header nav a:not(.nav-cta)::after{display:block!important;content:'';position:absolute;inset:auto 12px 5px;height:2px;width:auto;background:var(--navy);border-radius:2px;transform:scaleX(0);transition:transform .25s ease}
+ .header nav a[aria-current=page]:not(.nav-cta)::after,.header nav a:not(.nav-cta):hover::after{transform:scaleX(1)}
+}
+@media(max-width:960px){
+ .header{height:80px}
+ .header.is-scrolled{height:72px;margin-bottom:8px}
+ .header .official-logo{width:60px;height:60px}
+ .header.is-scrolled .official-logo{width:52px;height:52px}
+ .header-inner{width:calc(100% - var(--page-gutter)*2);gap:12px}
+ .header .menu-toggle{margin-left:0;gap:8px;padding:10px 12px;min-height:44px;min-width:89px;justify-content:center;border:1px solid #a7b8cd;border-radius:24px;font-size:.8rem;line-height:1.4;background:var(--paper)}
+ .menu-icon{width:18px;flex-shrink:0}
+ .header-inquire{display:inline-flex;align-items:center;justify-content:center;margin-left:auto;min-height:44px;padding:10px 15px;border:1px solid var(--navy);border-radius:24px;background:var(--navy);color:var(--paper);font-size:.8rem;line-height:1.4;font-weight:600}
+ .header-inquire:hover{background:#032048}
+ .header-inquire[aria-current=page]{box-shadow:0 0 0 3px #052c6012}
+ .menu-toggle:hover,.menu-toggle[aria-expanded=true]{background:#e5edf5}
+ .header nav{max-height:calc(100svh - 88px)}
+}
