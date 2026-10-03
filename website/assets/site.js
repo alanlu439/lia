@@ -177,6 +177,7 @@ if (form) {
   const button = form.querySelector('button[type="submit"]');
   const syncPhone = () => {
     phone.required = method.value === 'phone';
+    form.querySelector('#phone-required').hidden = !phone.required;
     phone.setAttribute('aria-required', String(phone.required));
   };
   method.addEventListener('change', syncPhone);
