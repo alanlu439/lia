@@ -6,7 +6,7 @@ import re
 
 root = Path(__file__).resolve().parents[1]
 site = root / "website"
-expected = {"index.html", "admission/index.html", "request-info/index.html", "serve/index.html", "about/index.html"}
+expected = {"index.html", "admission/index.html", "inquire/index.html", "request-info/index.html", "serve/index.html", "about/index.html"}
 assert {str(p.relative_to(site)) for p in site.rglob("*.html")} == expected
 config = (root / "netlify.toml").read_text()
 assert 'publish = "website"' in config
@@ -38,6 +38,10 @@ for page in site.rglob("*.html"):
     parser.canonical = []
     parser.metadata = {}
     parser.feed(page.read_text())
+    if page.relative_to(site).as_posix() == "request-info/index.html":
+        assert parser.canonical == ["https://alanlu439.github.io/lia/inquire/"]
+        assert 'url=../inquire/' in page.read_text()
+        continue
     route = page.parent.relative_to(site).as_posix()
     canonical = "https://alanlu439.github.io/lia/" + ("" if route == "." else route + "/")
     assert parser.canonical == [canonical], f"Incorrect canonical URL in {page}"
@@ -57,4 +61,4 @@ for url in re.findall(r"url\(['\"]?([^)'\"]+)", (site / "assets/style.css").read
         continue
     target = site / url.lstrip("/") if url.startswith("/") else site / "assets" / url
     assert target.is_file(), f"Missing CSS asset: {url}"
-print("Validated five pages, local/CSS assets, canonical URLs, sharing metadata, sitemap, and direct Netlify publishing.")
+print("Validated five pages and the legacy inquiry redirect, local/CSS assets, canonical URLs, sharing metadata, sitemap, and direct Netlify publishing.")

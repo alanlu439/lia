@@ -14,8 +14,22 @@ const mobile = window.matchMedia('(max-width: 960px)');
 const menuBackdrop = document.createElement('div');
 menuBackdrop.className = 'menu-backdrop';
 menuBackdrop.setAttribute('aria-hidden', 'true');
-document.body.prepend(menuBackdrop);
+header.append(menuBackdrop);
 menuBackdrop.addEventListener('click', () => setMenu(false, true));
+const popupClose = document.createElement('button');
+popupClose.type = 'button';
+popupClose.className = 'menu-popup-close';
+popupClose.setAttribute('aria-label', 'Close menu');
+popupClose.textContent = 'Close ×';
+nav.prepend(popupClose);
+popupClose.addEventListener('click', () => setMenu(false, true));
+nav.addEventListener('keydown', event => {
+  if (event.key !== 'Tab' || !mobile.matches || !nav.classList.contains('open')) return;
+  const controls = [...nav.querySelectorAll('a[href], button')];
+  const first = controls[0], last = controls[controls.length - 1];
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+});
 let menuSettleTimer;
 function setMenu(open, restoreFocus = false) {
   clearTimeout(menuSettleTimer);
@@ -39,6 +53,8 @@ function setMenu(open, restoreFocus = false) {
   menuBackdrop.classList.toggle('open', popupOpen);
   document.body.classList.toggle('menu-popup-open', popupOpen);
   document.querySelectorAll('main, footer, .opening').forEach(root => { root.inert = popupOpen; });
+  header.querySelectorAll('.brand, .menu-toggle, .header-inquire').forEach(control => { control.inert = popupOpen; });
+  if (popupOpen) popupClose.focus();
   if (restoreFocus) toggle.focus();
 }
 if (toggle && nav) {
@@ -237,7 +253,7 @@ if (form) {
   form.addEventListener('submit', async event => {
     // GitHub Pages has no server; a normal POST avoids cross-origin fetch restrictions.
     if (location.hostname.endsWith('.github.io')) {
-      form.action = 'https://logos-international-academy.netlify.app/request-info/?sent=1';
+      form.action = 'https://logos-international-academy.netlify.app/inquire/?sent=1';
       return;
     }
     event.preventDefault();
@@ -251,7 +267,7 @@ if (form) {
     button.textContent = 'Sending…';
     status.hidden = true;
     try {
-      const response = await fetch('https://logos-international-academy.netlify.app/request-info/', {
+      const response = await fetch('https://logos-international-academy.netlify.app/inquire/', {
         method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
         body:new URLSearchParams(new FormData(form)).toString(),
         signal:AbortSignal.timeout(20000)

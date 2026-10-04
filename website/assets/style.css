@@ -710,3 +710,14 @@ html.page-arriving::after{opacity:1;pointer-events:auto;transition:none}
  .header nav .nav-cta{margin-top:10px}
 }
 @media(prefers-reduced-motion:reduce){.menu-backdrop,.header nav{transition:none!important}}
+
+/* Center the narrow-screen popup above a backdrop covering the entire header. */
+.menu-popup-close{display:none}
+@media(max-width:960px){
+ .header.menu-active{z-index:40}
+ .header>.menu-backdrop{z-index:2}
+ .header nav,.header nav.open{position:fixed;z-index:3;top:50%;left:50%;max-height:calc(100svh - 32px);transform-origin:center}
+ .header nav{transform:translate(-50%,-50%) scale(.98)}
+ .header nav.open{transform:translate(-50%,-50%) scale(1)}
+ .menu-popup-close{display:flex;align-self:flex-end;align-items:center;justify-content:center;min-height:44px;padding:8px 14px;margin-bottom:8px;border:1px solid #a7b8cd;border-radius:24px;background:var(--paper);color:var(--navy);font-size:.8rem}
+}
