@@ -11,6 +11,11 @@ const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#main-nav');
 const header = document.querySelector('.header');
 const mobile = window.matchMedia('(max-width: 960px)');
+const menuBackdrop = document.createElement('div');
+menuBackdrop.className = 'menu-backdrop';
+menuBackdrop.setAttribute('aria-hidden', 'true');
+document.body.prepend(menuBackdrop);
+menuBackdrop.addEventListener('click', () => setMenu(false, true));
 let menuSettleTimer;
 function setMenu(open, restoreFocus = false) {
   clearTimeout(menuSettleTimer);
@@ -30,6 +35,10 @@ function setMenu(open, restoreFocus = false) {
   toggle.querySelector('.menu-label').textContent = open ? 'Close' : 'Menu';
   nav.classList.toggle('open', open);
   nav.inert = mobile.matches && !open;
+  const popupOpen = mobile.matches && open;
+  menuBackdrop.classList.toggle('open', popupOpen);
+  document.body.classList.toggle('menu-popup-open', popupOpen);
+  document.querySelectorAll('main, footer, .opening').forEach(root => { root.inert = popupOpen; });
   if (restoreFocus) toggle.focus();
 }
 if (toggle && nav) {

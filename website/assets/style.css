@@ -697,3 +697,16 @@ html.page-arriving::after{opacity:1;pointer-events:auto;transition:none}
 .page-intro .breadcrumb.breadcrumb-positioned,.page-intro .breadcrumb.breadcrumb-positioned.is-floating{opacity:1;transform:translateX(-50%);transition:opacity .35s ease,box-shadow .35s ease;animation:breadcrumb-fade .4s ease both}
 @keyframes breadcrumb-fade{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.page-intro .breadcrumb.breadcrumb-positioned{animation:none;transition:none}}
+
+/* Narrow screens use a floating menu over a softly blurred page. */
+.menu-backdrop{position:fixed;inset:0;z-index:19;background:#052c6033;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s}
+.menu-backdrop.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease,visibility 0s}
+@media(max-width:960px){
+ body.menu-popup-open{overflow:hidden}
+ .header nav,.header nav.open{top:calc(100% + 12px);left:50%;right:auto;width:calc(100% - 32px);max-width:560px;padding:16px;border:1px solid #d2dce7;border-radius:24px;max-height:calc(100svh - var(--menu-header-height,80px) - 28px);box-shadow:0 20px 60px #052c6033;clip-path:none;transform-origin:top center}
+ .header nav{opacity:0;transform:translate(-50%,-8px) scale(.98);transition:transform .25s cubic-bezier(.22,1,.36,1),opacity .25s ease,visibility 0s .25s}
+ .header nav.open{opacity:1;transform:translate(-50%,0) scale(1);transition:transform .3s cubic-bezier(.22,1,.36,1),opacity .25s ease,visibility 0s}
+ .header nav a:not(.nav-cta){padding:14px 16px}
+ .header nav .nav-cta{margin-top:10px}
+}
+@media(prefers-reduced-motion:reduce){.menu-backdrop,.header nav{transition:none!important}}
