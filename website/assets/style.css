@@ -550,8 +550,8 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
 /* Full-width dropdown with rounded controls, anchored to the header. */
 @media(max-width:960px){
  .header nav,.header nav.open{top:100%;left:0;right:0;width:100%;padding:18px var(--page-gutter) 22px;border:1px solid #d2dce7;border-inline:0;border-radius:0 0 22px 22px;background:#fbf9f5;box-shadow:0 18px 50px #052c6029;max-height:calc(100svh - 112px);overflow-y:auto;transform-origin:top center}
- .header nav{opacity:0;transform:translateY(-12px);clip-path:inset(0 0 100% 0 round 0 0 22px 22px);transition:clip-path .32s cubic-bezier(.4,0,.6,1),transform .32s ease,opacity .24s ease,visibility 0s .32s}
- .header nav.open{transform:translateY(0);clip-path:inset(0 0 0 0 round 0 0 22px 22px);opacity:1;transition:clip-path .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1),opacity .24s ease,visibility 0s}
+ .header nav{opacity:1;transform:translateY(-100%);clip-path:inset(100% 0 0 0 round 0 0 22px 22px);transition:clip-path .32s cubic-bezier(.4,0,.6,1),transform .32s cubic-bezier(.4,0,.6,1),visibility 0s .32s}
+ .header nav.open{transform:translateY(0);clip-path:inset(0 0 0 0 round 0 0 22px 22px);opacity:1;transition:clip-path .44s cubic-bezier(.22,1,.36,1),transform .44s cubic-bezier(.22,1,.36,1),visibility 0s}
  .header nav a:not(.nav-cta){display:flex;align-items:center;justify-content:space-between;gap:20px;margin:0;padding:16px 18px;border:0;border-radius:12px;font-size:1rem;line-height:1.4;color:var(--navy);font-weight:500}
  .header nav a:not(.nav-cta)::after,.header nav a[aria-current=page]:not(.nav-cta)::after{display:block!important;content:'›';position:static!important;background:none!important;width:auto!important;height:auto!important;inset:auto!important;font:400 1.4rem/1 var(--serif);color:#526174}
  .header nav a:not(.nav-cta):hover,.header nav a[aria-current=page]:not(.nav-cta){background:#e5edf5;color:var(--navy)}
@@ -673,3 +673,10 @@ footer{background:#05264f;color:var(--paper);border-top:5px solid #a7bed8}
 .banner-top{gap:0}
 .banner-cycle{display:flex;align-items:center;gap:clamp(24px,4vw,64px);padding-right:clamp(24px,4vw,64px);flex-shrink:0}
 @media(prefers-reduced-motion:reduce),print{.banner-cycle{white-space:normal;flex-wrap:wrap;justify-content:center;padding-right:0;gap:16px}.banner-cycle[data-banner-copy]{display:none}}
+
+/* A single fade works consistently across browsers and menu navigation. */
+@view-transition{navigation:none}
+html::after{content:'';position:fixed;inset:0;z-index:900;background:#fff;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.22,1,.36,1)}
+html.page-leaving::after{opacity:1;pointer-events:auto;transition-duration:.24s}
+html.page-arriving::after{opacity:1;pointer-events:auto;transition:none}
+@media(prefers-reduced-motion:reduce){html::after{transition:none!important}}

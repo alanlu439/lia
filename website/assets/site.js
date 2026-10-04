@@ -46,15 +46,6 @@ if (toggle && nav) {
       if (nav.classList.contains('open') && !header.contains(document.activeElement)) setMenu(false);
     });
   });
-  nav.addEventListener('click', event => {
-    const link = event.target.closest('a');
-    if (!link || !mobile.matches || !nav.classList.contains('open') || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') return;
-    const destination = new URL(link.href, location.href);
-    if (destination.origin !== location.origin) return;
-    event.preventDefault();
-    setMenu(false);
-    setTimeout(() => location.assign(destination.href), motionPreference.matches ? 0 : 360);
-  });
   mobile.addEventListener('change', () => setMenu(false));
 }
 const updateHeader = () => { if (!header?.classList.contains('menu-active')) header?.classList.toggle('is-scrolled', window.scrollY > 12); };
@@ -99,6 +90,36 @@ if (!motionPreference.matches && 'IntersectionObserver' in window) {
 window.addEventListener('pageshow', event => {
   if (event.persisted && toggle && nav) setMenu(false);
   updateHeader();
+});
+// One white transition covers menu closure, navigation, and destination readiness.
+let pageNavigationPending = false;
+document.addEventListener('click', event => {
+  const link = event.target.closest('a[href]');
+  if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank' || link.hasAttribute('download')) return;
+  const destination = new URL(link.href, location.href);
+  if (destination.origin !== location.origin || destination.pathname === location.pathname && destination.search === location.search) return;
+  if (motionPreference.matches) return;
+  event.preventDefault();
+  if (pageNavigationPending) return;
+  pageNavigationPending = true;
+  if (nav.classList.contains('open')) setMenu(false);
+  try { sessionStorage.setItem('lia-page-arriving', '1'); } catch {}
+  document.documentElement.classList.add('page-leaving');
+  setTimeout(() => location.assign(destination.href), 280);
+});
+const revealArrivingPage = async () => {
+  if (!document.documentElement.classList.contains('page-arriving')) return;
+  const ready = [document.fonts.ready];
+  if (document.readyState !== 'complete') ready.push(new Promise(resolve => window.addEventListener('load', resolve, {once:true})));
+  await Promise.race([Promise.allSettled(ready), new Promise(resolve => setTimeout(resolve, 2500))]);
+  requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.remove('page-arriving')));
+};
+revealArrivingPage();
+window.addEventListener('pageshow', event => {
+  if (event.persisted) {
+    pageNavigationPending = false;
+    document.documentElement.classList.remove('page-leaving', 'page-arriving');
+  }
 });
 // Scroll-linked introduction without intercepting wheel or touch scrolling.
 const opening = document.querySelector('.opening');
