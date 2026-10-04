@@ -11,7 +11,21 @@ const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#main-nav');
 const header = document.querySelector('.header');
 const mobile = window.matchMedia('(max-width: 960px)');
+let menuSettleTimer;
 function setMenu(open, restoreFocus = false) {
+  clearTimeout(menuSettleTimer);
+  if (open && !header.classList.contains('menu-active')) {
+    header.style.setProperty('--menu-header-height', `${header.getBoundingClientRect().height}px`);
+    header.style.setProperty('--menu-header-margin', getComputedStyle(header).marginBottom);
+    header.classList.add('menu-active');
+  } else if (!open && header.classList.contains('menu-active')) {
+    menuSettleTimer = setTimeout(() => {
+      header.classList.remove('menu-active');
+      header.style.removeProperty('--menu-header-height');
+      header.style.removeProperty('--menu-header-margin');
+      updateHeader();
+    }, 360);
+  }
   toggle.setAttribute('aria-expanded', String(open));
   toggle.querySelector('.menu-label').textContent = open ? 'Close' : 'Menu';
   nav.classList.toggle('open', open);
@@ -39,11 +53,11 @@ if (toggle && nav) {
     if (destination.origin !== location.origin) return;
     event.preventDefault();
     setMenu(false);
-    setTimeout(() => location.assign(destination.href), motionPreference.matches ? 0 : 310);
+    setTimeout(() => location.assign(destination.href), motionPreference.matches ? 0 : 360);
   });
   mobile.addEventListener('change', () => setMenu(false));
 }
-const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 12);
+const updateHeader = () => { if (!header?.classList.contains('menu-active')) header?.classList.toggle('is-scrolled', window.scrollY > 12); };
 window.addEventListener('scroll', updateHeader, {passive:true});
 updateHeader();
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -82,8 +96,8 @@ if (!motionPreference.matches && 'IntersectionObserver' in window) {
     if (event.persisted) revealAll();
   });
 }
-window.addEventListener('pageshow', () => {
-  if (toggle && nav) setMenu(false);
+window.addEventListener('pageshow', event => {
+  if (event.persisted && toggle && nav) setMenu(false);
   updateHeader();
 });
 // Scroll-linked introduction without intercepting wheel or touch scrolling.
@@ -353,18 +367,22 @@ if (programBanner) {
     if (motionPreference.matches) { programBanner.style.removeProperty('--banner-shift'); return; }
     const rect = programBanner.getBoundingClientRect();
     if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-    const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
     const headline = programBanner.querySelector('.banner-top');
-    const categories = programBanner.querySelector('.banner-bottom');
-    const travel = Math.max(0, headline.scrollWidth - window.innerWidth + 48);
-    const counterTravel = Math.max(0, categories.scrollWidth - window.innerWidth + 48);
-    programBanner.style.setProperty('--banner-shift', `${24 - progress * travel}px`);
-    programBanner.style.setProperty('--banner-counter-shift', `${24 - (1 - progress) * counterTravel}px`);
+    const viewportWidth = document.documentElement.clientWidth;
+    const gutter = Math.min(32, viewportWidth * .06);
+    const travel = Math.max(0, headline.scrollWidth - viewportWidth + gutter * 2);
+    // Complete the horizontal journey while the strip is fully visible.
+    // Actual text width and available screen height determine the speed.
+    const start = Math.max(window.innerHeight * .72, header.offsetHeight + rect.height + 48);
+    const end = header.offsetHeight + 24;
+    const progress = Math.max(0, Math.min(1, (start - rect.top) / Math.max(1, start - end)));
+    programBanner.style.setProperty('--banner-shift', `${gutter - progress * travel}px`);
   };
   const scheduleProgramBanner = () => { if (!bannerFrame) bannerFrame = requestAnimationFrame(renderProgramBanner); };
   window.addEventListener('scroll', scheduleProgramBanner, {passive:true});
   window.addEventListener('resize', scheduleProgramBanner, {passive:true});
   motionPreference.addEventListener('change', scheduleProgramBanner);
+  document.fonts.ready.then(scheduleProgramBanner);
   scheduleProgramBanner();
 }
 
