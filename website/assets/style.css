@@ -685,3 +685,9 @@ html.page-arriving::after{opacity:1;pointer-events:auto;transition:none}
 .page-intro .breadcrumb.breadcrumb-positioned{position:fixed;left:50%;top:var(--breadcrumb-top);transform:translateX(-50%) scale(1);transform-origin:top center;transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease}
 .page-intro .breadcrumb.breadcrumb-positioned.is-floating{transform:translateX(-50%) scale(.94)}
 @media(prefers-reduced-motion:reduce){.page-intro .breadcrumb.breadcrumb-positioned{transition:none}}
+
+/* Active and hovered links share exactly the same underline position. */
+@media(min-width:961px){
+ .header nav a:not(.nav-cta){display:inline-flex;align-items:center;min-height:44px}
+ .header nav a:not(.nav-cta)::after,.header nav a[aria-current=page]:not(.nav-cta)::after{inset:auto 12px 5px;height:2px;width:auto}
+}
