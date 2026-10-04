@@ -267,8 +267,10 @@ document.querySelectorAll('.program-choice').forEach(details => {
   details.addEventListener('toggle', () => { if (!animation) expanded = details.open; });
 });
 
-// Prepare all home images and fonts before revealing the landing screen.
-const loader = document.querySelector('.site-loader');
+// Prepare critical first-page assets before revealing any entry page.
+const entryLoader = document.querySelector('.site-loader');
+const loader = document.documentElement.classList.contains('site-loading') ? entryLoader : null;
+if (!loader) entryLoader?.remove();
 if (loader) {
   const welcomeMessages = [
     'Preparing your welcome.',
@@ -311,6 +313,16 @@ if (loader) {
   tasks.push(document.fonts.load('400 16px Montserrat'));
   tasks.push(document.fonts.load('600 16px Montserrat'));
   tasks.push(document.fonts.ready);
+  const intro = document.querySelector('.page-intro');
+  if (intro) {
+    const background = getComputedStyle(intro).backgroundImage;
+    for (const match of background.matchAll(/url\(["']?([^"')]+)["']?\)/g)) {
+      const image = new Image();
+      image.src = match[1];
+      tasks.push(image.decode().catch(() => {}));
+    }
+  }
+  tasks.push(new Promise(resolve => setTimeout(resolve, motionPreference.matches ? 0 : 400)));
   let finished = 0;
   const update = () => {
     const percent = Math.round(finished / tasks.length * 100);
@@ -322,10 +334,51 @@ if (loader) {
   const fallback = new Promise(resolve => { timer = setTimeout(resolve, 12000); });
   Promise.race([ready, fallback]).then(() => {
     clearTimeout(timer);
+    finished = tasks.length; update();
+    try { sessionStorage.setItem('lia-entry-ready', '1'); } catch {}
     document.documentElement.classList.remove('site-loading');
     loader.classList.add('loader-finished');
     roots.forEach(element => element.inert = false);
     window.dispatchEvent(new Event('resize'));
     setTimeout(() => loader.remove(), motionPreference.matches ? 0 : 650);
   });
+}
+
+// Keep banner movement tied to scroll rather than an endless animation.
+const programBanner = document.querySelector('.program-banner');
+if (programBanner) {
+  let bannerFrame = 0;
+  const renderProgramBanner = () => {
+    bannerFrame = 0;
+    if (motionPreference.matches) { programBanner.style.removeProperty('--banner-shift'); return; }
+    const rect = programBanner.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+    const headline = programBanner.querySelector('.banner-top');
+    const categories = programBanner.querySelector('.banner-bottom');
+    const travel = Math.max(0, headline.scrollWidth - window.innerWidth + 48);
+    const counterTravel = Math.max(0, categories.scrollWidth - window.innerWidth + 48);
+    programBanner.style.setProperty('--banner-shift', `${24 - progress * travel}px`);
+    programBanner.style.setProperty('--banner-counter-shift', `${24 - (1 - progress) * counterTravel}px`);
+  };
+  const scheduleProgramBanner = () => { if (!bannerFrame) bannerFrame = requestAnimationFrame(renderProgramBanner); };
+  window.addEventListener('scroll', scheduleProgramBanner, {passive:true});
+  window.addEventListener('resize', scheduleProgramBanner, {passive:true});
+  motionPreference.addEventListener('change', scheduleProgramBanner);
+  scheduleProgramBanner();
+}
+
+const breadcrumb = document.querySelector('.breadcrumb');
+const breadcrumbSlot = document.querySelector('.breadcrumb-slot');
+if (breadcrumb && breadcrumbSlot) {
+  let breadcrumbFrame = 0;
+  const renderBreadcrumb = () => {
+    breadcrumbFrame = 0;
+    breadcrumb.classList.toggle('is-floating', breadcrumbSlot.getBoundingClientRect().top < header.getBoundingClientRect().bottom + 12);
+  };
+  const scheduleBreadcrumb = () => { if (!breadcrumbFrame) breadcrumbFrame = requestAnimationFrame(renderBreadcrumb); };
+  window.addEventListener('scroll', scheduleBreadcrumb, {passive:true});
+  window.addEventListener('resize', scheduleBreadcrumb, {passive:true});
+  window.addEventListener('pageshow', scheduleBreadcrumb);
+  scheduleBreadcrumb();
 }
