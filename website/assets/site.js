@@ -426,11 +426,16 @@ if (breadcrumb && breadcrumbSlot) {
   let breadcrumbFrame = 0;
   const renderBreadcrumb = () => {
     breadcrumbFrame = 0;
-    breadcrumb.classList.toggle('is-floating', breadcrumbSlot.getBoundingClientRect().top < header.getBoundingClientRect().bottom + 12);
+    const slotTop = breadcrumbSlot.getBoundingClientRect().top;
+    const restingTop = header.getBoundingClientRect().bottom + 12;
+    breadcrumb.style.setProperty('--breadcrumb-top', `${Math.max(slotTop, restingTop)}px`);
+    breadcrumb.classList.add('breadcrumb-positioned');
+    breadcrumb.classList.toggle('is-floating', slotTop < restingTop);
   };
   const scheduleBreadcrumb = () => { if (!breadcrumbFrame) breadcrumbFrame = requestAnimationFrame(renderBreadcrumb); };
   window.addEventListener('scroll', scheduleBreadcrumb, {passive:true});
   window.addEventListener('resize', scheduleBreadcrumb, {passive:true});
   window.addEventListener('pageshow', scheduleBreadcrumb);
+  if ('ResizeObserver' in window) new ResizeObserver(scheduleBreadcrumb).observe(header);
   scheduleBreadcrumb();
 }

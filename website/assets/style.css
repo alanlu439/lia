@@ -680,3 +680,8 @@ html::after{content:'';position:fixed;inset:0;z-index:900;background:#fff;opacit
 html.page-leaving::after{opacity:1;pointer-events:auto;transition-duration:.24s}
 html.page-arriving::after{opacity:1;pointer-events:auto;transition:none}
 @media(prefers-reduced-motion:reduce){html::after{transition:none!important}}
+
+/* Keep one positioning mode so docking never jumps between layout and fixed. */
+.page-intro .breadcrumb.breadcrumb-positioned{position:fixed;left:50%;top:var(--breadcrumb-top);transform:translateX(-50%) scale(1);transform-origin:top center;transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease}
+.page-intro .breadcrumb.breadcrumb-positioned.is-floating{transform:translateX(-50%) scale(.94)}
+@media(prefers-reduced-motion:reduce){.page-intro .breadcrumb.breadcrumb-positioned{transition:none}}
