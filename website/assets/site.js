@@ -16,13 +16,6 @@ menuBackdrop.className = 'menu-backdrop';
 menuBackdrop.setAttribute('aria-hidden', 'true');
 header.append(menuBackdrop);
 menuBackdrop.addEventListener('click', () => setMenu(false, true));
-const popupClose = document.createElement('button');
-popupClose.type = 'button';
-popupClose.className = 'menu-popup-close';
-popupClose.setAttribute('aria-label', 'Close menu');
-popupClose.textContent = 'Close ×';
-nav.prepend(popupClose);
-popupClose.addEventListener('click', () => setMenu(false, true));
 nav.addEventListener('keydown', event => {
   if (event.key !== 'Tab' || !mobile.matches || !nav.classList.contains('open')) return;
   const controls = [...nav.querySelectorAll('a[href], button')];
@@ -54,7 +47,7 @@ function setMenu(open, restoreFocus = false) {
   document.body.classList.toggle('menu-popup-open', popupOpen);
   document.querySelectorAll('main, footer, .opening').forEach(root => { root.inert = popupOpen; });
   header.querySelectorAll('.brand, .menu-toggle, .header-inquire').forEach(control => { control.inert = popupOpen; });
-  if (popupOpen) popupClose.focus();
+  if (popupOpen) nav.querySelector('a[href]')?.focus();
   if (restoreFocus) toggle.focus();
 }
 if (toggle && nav) {
