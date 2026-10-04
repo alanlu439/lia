@@ -407,7 +407,7 @@ if (programBanner) {
     if (!motionPreference.matches && cycleWidth > 0 && rect.bottom > 0 && rect.top < window.innerHeight) {
       const elapsed = lastTime ? Math.min(time - lastTime, 64) : 0;
       // Constant readable speed on every screen, regardless of phrase width.
-      phase = ((phase + elapsed * .035 + scrollDelta * .35) % cycleWidth + cycleWidth) % cycleWidth;
+      phase = ((phase + elapsed * .07 + scrollDelta * .7) % cycleWidth + cycleWidth) % cycleWidth;
       track.style.transform = `translateX(${-phase}px)`;
     }
     lastTime = time;
