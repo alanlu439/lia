@@ -358,32 +358,45 @@ if (loader) {
   });
 }
 
-// Keep banner movement tied to scroll rather than an endless animation.
+// Repeat complete phrases continuously, with an extra nudge from scrolling.
 const programBanner = document.querySelector('.program-banner');
 if (programBanner) {
-  let bannerFrame = 0;
-  const renderProgramBanner = () => {
-    bannerFrame = 0;
-    if (motionPreference.matches) { programBanner.style.removeProperty('--banner-shift'); return; }
-    const rect = programBanner.getBoundingClientRect();
-    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-    const headline = programBanner.querySelector('.banner-top');
-    const viewportWidth = document.documentElement.clientWidth;
-    const gutter = Math.min(32, viewportWidth * .06);
-    const travel = Math.max(0, headline.scrollWidth - viewportWidth + gutter * 2);
-    // Complete the horizontal journey while the strip is fully visible.
-    // Actual text width and available screen height determine the speed.
-    const start = Math.max(window.innerHeight * .72, header.offsetHeight + rect.height + 48);
-    const end = header.offsetHeight + 24;
-    const progress = Math.max(0, Math.min(1, (start - rect.top) / Math.max(1, start - end)));
-    programBanner.style.setProperty('--banner-shift', `${gutter - progress * travel}px`);
+  const track = programBanner.querySelector('.banner-top');
+  const cycle = track.querySelector('.banner-cycle');
+  let cycleWidth = 0, phase = 0, lastTime = 0, previousScroll = window.scrollY;
+  const measureBanner = () => {
+    track.querySelectorAll('[data-banner-copy]').forEach(copy => copy.remove());
+    cycleWidth = cycle.getBoundingClientRect().width;
+    if (!motionPreference.matches && cycleWidth > 0) {
+      const copies = Math.ceil(programBanner.clientWidth / cycleWidth) + 1;
+      for (let i = 0; i < copies; i++) {
+        const copy = cycle.cloneNode(true);
+        copy.dataset.bannerCopy = '';
+        copy.setAttribute('aria-hidden', 'true');
+        track.append(copy);
+      }
+    }
+    phase = cycleWidth ? phase % cycleWidth : 0;
+    if (motionPreference.matches) track.style.removeProperty('transform');
   };
-  const scheduleProgramBanner = () => { if (!bannerFrame) bannerFrame = requestAnimationFrame(renderProgramBanner); };
-  window.addEventListener('scroll', scheduleProgramBanner, {passive:true});
-  window.addEventListener('resize', scheduleProgramBanner, {passive:true});
-  motionPreference.addEventListener('change', scheduleProgramBanner);
-  document.fonts.ready.then(scheduleProgramBanner);
-  scheduleProgramBanner();
+  const animateBanner = time => {
+    const rect = programBanner.getBoundingClientRect();
+    const scrollDelta = window.scrollY - previousScroll;
+    previousScroll = window.scrollY;
+    if (!motionPreference.matches && cycleWidth > 0 && rect.bottom > 0 && rect.top < window.innerHeight) {
+      const elapsed = lastTime ? Math.min(time - lastTime, 64) : 0;
+      // Constant readable speed on every screen, regardless of phrase width.
+      phase = ((phase + elapsed * .035 + scrollDelta * .35) % cycleWidth + cycleWidth) % cycleWidth;
+      track.style.transform = `translateX(${-phase}px)`;
+    }
+    lastTime = time;
+    requestAnimationFrame(animateBanner);
+  };
+  window.addEventListener('resize', measureBanner, {passive:true});
+  motionPreference.addEventListener('change', measureBanner);
+  document.fonts.ready.then(measureBanner);
+  measureBanner();
+  requestAnimationFrame(animateBanner);
 }
 
 const breadcrumb = document.querySelector('.breadcrumb');
